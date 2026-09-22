@@ -1,0 +1,30 @@
+[2026-09-22 17:25:55] [INFO] Daemon test initialization successful.
+[2026-09-22 17:27:47] [INFO] ================================================================================
+[2026-09-22 17:27:47] [INFO] AUTONOMOUS TRADING DAEMON ONLINE (AUTO-BOOT RESUME ACTIVE)
+[2026-09-22 17:27:47] [INFO] PID: 1768 | Workspace: E:\stock_predictor\stock_predictor
+[2026-09-22 17:27:47] [INFO] ================================================================================
+[2026-09-22 17:27:47] [INFO] >>> 09:30 AM: EXECUTING POINT-IN-TIME MID-CAP SCANNER <<<
+[2026-09-22 17:27:47] [INFO] Scanner completed. 4 actionable orders generated.
+[2026-09-22 17:27:47] [INFO] >>> 15:15 IST: EXECUTING INTRADAY AUTO-SQUARE-OFF <<<
+[2026-09-22 17:27:47] [INFO] Square-off execution completed.
+[2026-09-22 17:27:47] [INFO] Market closed. Sleeping until tomorrow 08:30 AM (15h 2m)...
+[2026-09-22 17:28:42] [INFO] ================================================================================
+[2026-09-22 17:28:42] [INFO] AUTONOMOUS TRADING DAEMON ONLINE (AUTO-BOOT RESUME ACTIVE)
+[2026-09-22 17:28:42] [INFO] PID: 21548 | Workspace: E:\stock_predictor\stock_predictor
+[2026-09-22 17:28:42] [INFO] ================================================================================
+[2026-09-22 17:28:42] [INFO] Market closed. Sleeping until tomorrow 08:30 AM (15h 1m)...
+[2026-09-22 17:29:05] [INFO] ================================================================================
+[2026-09-22 17:29:05] [INFO] AUTONOMOUS TRADING DAEMON ONLINE (AUTO-BOOT RESUME ACTIVE)
+[2026-09-22 17:29:05] [INFO] PID: 2772 | Workspace: E:\stock_predictor\stock_predictor
+[2026-09-22 17:29:05] [INFO] ================================================================================
+[2026-09-22 17:29:05] [INFO] Market closed. Sleeping until tomorrow 08:30 AM (15h 0m)...
+[2026-09-22 17:29:37] [INFO] ================================================================================
+[2026-09-22 17:29:37] [INFO] AUTONOMOUS TRADING DAEMON ONLINE (AUTO-BOOT RESUME ACTIVE)
+[2026-09-22 17:29:37] [INFO] PID: 8912 | Workspace: E:\stock_predictor\stock_predictor
+[2026-09-22 17:29:37] [INFO] ================================================================================
+[2026-09-22 17:29:37] [INFO] Market closed. Sleeping until tomorrow 08:30 AM (15h 0m)...
+[2026-09-22 17:30:41] [INFO] ================================================================================
+[2026-09-22 17:30:41] [INFO] AUTONOMOUS TRADING DAEMON ONLINE (AUTO-BOOT RESUME ACTIVE)
+[2026-09-22 17:30:41] [INFO] PID: 17308 | Workspace: E:\stock_predictor\stock_predictor
+[2026-09-22 17:30:41] [INFO] ================================================================================
+[2026-09-22 17:30:41] [INFO] Market closed. Sleeping until tomorrow 08:30 AM (14h 59m)...

@@ -1,0 +1,209 @@
+trade_id,trading_date,symbol,company_name,sector,predicted_rank,pred_rank_num,actual_universe_rank,daily_return,prediction_outcome,is_exact_rank1_correct,is_top5_correct
+1,2025-09-19,HEXT,Hexaware Technologies Ltd.,Information Technology,Rank #1,1,18,1.5589515350930239,INCORRECT (Rank #18),False,False
+7,2025-09-25,AWL,AWL Agri Business Ltd.,Fast Moving Consumer Goods,Rank #1,1,1,3.5007877059025008,CORRECT (Exact #1 Hit),True,True
+11,2025-09-26,IPCALAB,Ipca Laboratories Ltd.,Healthcare,Rank #1,1,2,1.532759263272018,CORRECT (Top-5 Hit: #2),False,True
+6,2025-09-23,AUBANK,AU Small Finance Bank Ltd.,Financial Services,Rank #1,1,4,3.6258101361115194,CORRECT (Top-5 Hit: #4),False,True
+19,2025-09-30,NMDC,NMDC Ltd.,Metals & Mining,Rank #1,1,16,1.7592990255127747,INCORRECT (Rank #16),False,False
+14,2025-09-29,FORTIS,Fortis Healthcare Ltd.,Healthcare,Rank #1,1,4,4.073979916521578,CORRECT (Top-5 Hit: #4),False,True
+23,2025-10-01,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,Rank #1,1,6,3.9529569480807747,NEAR MISS (Top-10: #6),False,False
+27,2025-10-03,JSL,Jindal Stainless Ltd.,Metals & Mining,Rank #1,1,7,3.390596817804531,NEAR MISS (Top-10: #7),False,False
+36,2025-10-08,NATIONALUM,National Aluminium Co. Ltd.,Metals & Mining,Rank #1,1,1,3.0174499110521444,CORRECT (Exact #1 Hit),True,True
+33,2025-10-07,BHARTIHEXA,Bharti Hexacom Ltd.,Telecommunication,Rank #1,1,2,5.886939103880171,CORRECT (Top-5 Hit: #2),False,True
+30,2025-10-06,FORTIS,Fortis Healthcare Ltd.,Healthcare,Rank #1,1,1,7.496940642354173,CORRECT (Exact #1 Hit),True,True
+43,2025-10-10,TATACOMM,Tata Communications Ltd.,Telecommunication,Rank #1,1,1,10.219226570129917,CORRECT (Exact #1 Hit),True,True
+47,2025-10-13,PHOENIXLTD,Phoenix Mills Ltd.,Realty,Rank #1,1,13,1.570908326463617,INCORRECT (Rank #13),False,False
+39,2025-10-09,AUROPHARMA,Aurobindo Pharma Ltd.,Healthcare,Rank #1,1,3,4.585354253548281,CORRECT (Top-5 Hit: #3),False,True
+48,2025-10-14,IREDA,Indian Renewable Energy Development Agency Ltd.,Financial Services,Rank #1,1,4,2.9652821302179677,CORRECT (Top-5 Hit: #4),False,True
+53,2025-10-15,ICICIGI,ICICI Lombard General Insurance Company Ltd.,Financial Services,Rank #1,1,1,8.922792010405074,CORRECT (Exact #1 Hit),True,True
+58,2025-10-16,ENDURANCE,Endurance Technologies Ltd.,Automobile and Auto Components,Rank #1,1,3,3.742874554785697,CORRECT (Top-5 Hit: #3),False,True
+60,2025-10-20,MAHABANK,Bank of Maharashtra,Financial Services,Rank #1,1,6,4.377520507945215,NEAR MISS (Top-10: #6),False,False
+67,2025-10-24,ITCHOTELS,ITC Hotels Ltd.,Consumer Services,Rank #1,1,35,0.5345188679685033,INCORRECT (Rank #35),False,False
+63,2025-10-23,NAUKRI,Info Edge (India) Ltd.,Consumer Services,Rank #1,1,3,4.768419190691123,CORRECT (Top-5 Hit: #3),False,True
+69,2025-10-27,INDUSTOWER,Indus Towers Ltd.,Telecommunication,Rank #1,1,13,2.696728272270752,INCORRECT (Rank #13),False,False
+81,2025-10-30,ASHOKLEY,Ashok Leyland Ltd.,Capital Goods,Rank #1,1,16,0.924858223803525,INCORRECT (Rank #16),False,False
+77,2025-10-29,SAIL,Steel Authority of India Ltd.,Metals & Mining,Rank #1,1,1,6.348364979694589,CORRECT (Exact #1 Hit),True,True
+82,2025-10-31,AUROPHARMA,Aurobindo Pharma Ltd.,Healthcare,Rank #1,1,2,3.3015895160147393,CORRECT (Top-5 Hit: #2),False,True
+73,2025-10-28,UPL,UPL Ltd.,Chemicals,Rank #1,1,5,3.3463211515430378,CORRECT (Top-5 Hit: #5),False,True
+88,2025-11-04,MFSL,Max Financial Services Ltd.,Financial Services,Rank #1,1,10,2.0834668562947045,NEAR MISS (Top-10: #10),False,False
+84,2025-11-03,INDUSTOWER,Indus Towers Ltd.,Telecommunication,Rank #1,1,3,5.266777648932293,CORRECT (Top-5 Hit: #3),False,True
+92,2025-11-07,LICI,Life Insurance Corporation of India,Financial Services,Rank #1,1,10,3.130237731491873,NEAR MISS (Top-10: #10),False,False
+91,2025-11-06,ASTRAL,Astral Ltd.,Capital Goods,Rank #1,1,1,6.740723187541596,CORRECT (Exact #1 Hit),True,True
+96,2025-11-10,AIAENG,AIA Engineering Ltd.,Capital Goods,Rank #1,1,4,5.819665734132373,CORRECT (Top-5 Hit: #4),False,True
+99,2025-11-11,KPRMILL,K.P.R. Mill Ltd.,Textiles,Rank #1,1,3,4.848592998861835,CORRECT (Top-5 Hit: #3),False,True
+102,2025-11-12,APARINDS,Apar Industries Ltd.,Capital Goods,Rank #1,1,3,5.263154871851423,CORRECT (Top-5 Hit: #3),False,True
+105,2025-11-14,IPCALAB,Ipca Laboratories Ltd.,Healthcare,Rank #1,1,1,13.640547697345829,CORRECT (Exact #1 Hit),True,True
+104,2025-11-13,ASHOKLEY,Ashok Leyland Ltd.,Capital Goods,Rank #1,1,1,5.528667860955333,CORRECT (Exact #1 Hit),True,True
+108,2025-11-17,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,Rank #1,1,3,5.121095933494483,CORRECT (Top-5 Hit: #3),False,True
+110,2025-11-18,KPRMILL,K.P.R. Mill Ltd.,Textiles,Rank #1,1,3,3.249561195175372,CORRECT (Top-5 Hit: #3),False,True
+115,2025-11-20,TATACOMM,Tata Communications Ltd.,Telecommunication,Rank #1,1,7,2.23407284223427,NEAR MISS (Top-10: #7),False,False
+112,2025-11-19,LTTS,L&T Technology Services Ltd.,Information Technology,Rank #1,1,1,8.970426759011556,CORRECT (Exact #1 Hit),True,True
+118,2025-11-21,INDUSINDBK,IndusInd Bank Ltd.,Financial Services,Rank #1,1,1,2.0677506958840164,CORRECT (Exact #1 Hit),True,True
+122,2025-11-24,ICICIGI,ICICI Lombard General Insurance Company Ltd.,Financial Services,Rank #1,1,70,-0.3293206939861035,INCORRECT (Rank #70),False,False
+126,2025-11-26,OFSS,Oracle Financial Services Software Ltd.,Information Technology,Rank #1,1,73,1.1566063155780963,INCORRECT (Rank #73),False,False
+128,2025-11-27,LAURUSLABS,Laurus Labs Ltd.,Healthcare,Rank #1,1,12,1.6825530938838678,INCORRECT (Rank #12),False,False
+124,2025-11-25,ABCAPITAL,Aditya Birla Capital Ltd.,Financial Services,Rank #1,1,2,4.09823891920415,CORRECT (Top-5 Hit: #2),False,True
+132,2025-12-01,NMDC,NMDC Ltd.,Metals & Mining,Rank #1,1,8,1.9886417113004669,NEAR MISS (Top-10: #8),False,False
+129,2025-11-28,SRF,SRF Ltd.,Chemicals,Rank #1,1,3,3.0739429780535943,CORRECT (Top-5 Hit: #3),False,True
+138,2025-12-03,APOLLOTYRE,Apollo Tyres Ltd.,Automobile and Auto Components,Rank #1,1,3,3.0717338253675375,CORRECT (Top-5 Hit: #3),False,True
+134,2025-12-02,BALKRISIND,Balkrishna Industries Ltd.,Automobile and Auto Components,Rank #1,1,1,6.325804805712858,CORRECT (Exact #1 Hit),True,True
+146,2025-12-05,SBICARD,SBI Cards and Payment Services Ltd.,Financial Services,Rank #1,1,5,3.4174555660432047,CORRECT (Top-5 Hit: #5),False,True
+141,2025-12-04,PETRONET,Petronet LNG Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,1,4.539530708022522,CORRECT (Exact #1 Hit),True,True
+147,2025-12-08,ITCHOTELS,ITC Hotels Ltd.,Consumer Services,Rank #1,1,21,-0.22340460684451566,INCORRECT (Rank #21),False,False
+149,2025-12-12,SWIGGY,Swiggy Ltd.,Consumer Services,Rank #1,1,8,3.8135561633715747,NEAR MISS (Top-10: #8),False,False
+152,2025-12-16,BHARTIHEXA,Bharti Hexacom Ltd.,Telecommunication,Rank #1,1,3,2.546606825123751,CORRECT (Top-5 Hit: #3),False,True
+154,2025-12-18,NAM-INDIA,Nippon Life India Asset Management Ltd.,Financial Services,Rank #1,1,1,5.8493742113893745,CORRECT (Exact #1 Hit),True,True
+162,2025-12-22,MCX,Multi Commodity Exchange of India Ltd.,Financial Services,Rank #1,1,3,4.9869070538544165,CORRECT (Top-5 Hit: #3),False,True
+157,2025-12-19,LENSKART,Lenskart Solutions Ltd.,Consumer Services,Rank #1,1,1,14.059267438185993,CORRECT (Exact #1 Hit),True,True
+164,2025-12-23,IREDA,Indian Renewable Energy Development Agency Ltd.,Financial Services,Rank #1,1,11,2.2554590403944346,INCORRECT (Rank #11),False,False
+166,2025-12-24,THERMAX,Thermax Ltd.,Capital Goods,Rank #1,1,5,2.3501766267686195,CORRECT (Top-5 Hit: #5),False,True
+169,2025-12-29,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,Rank #1,1,2,2.310166598083327,CORRECT (Top-5 Hit: #2),False,True
+173,2025-12-30,3MINDIA,3M India Ltd.,Diversified,Rank #1,1,13,2.8413252257647734,INCORRECT (Rank #13),False,False
+178,2025-12-31,INDIANB,Indian Bank,Financial Services,Rank #1,1,7,3.4919672132915953,NEAR MISS (Top-10: #7),False,False
+183,2026-01-01,INDUSTOWER,Indus Towers Ltd.,Telecommunication,Rank #1,1,4,4.071642874562582,CORRECT (Top-5 Hit: #4),False,True
+190,2026-01-05,JKCEMENT,J.K. Cement Ltd.,Construction Materials,Rank #1,1,2,3.6057877908729283,CORRECT (Top-5 Hit: #2),False,True
+186,2026-01-02,SJVN,SJVN Ltd.,Power,Rank #1,1,1,11.105166059736442,CORRECT (Exact #1 Hit),True,True
+195,2026-01-07,LUPIN,Lupin Ltd.,Healthcare,Rank #1,1,13,3.0050838581498107,INCORRECT (Rank #13),False,False
+198,2026-01-08,SCHAEFFLER,Schaeffler India Ltd.,Automobile and Auto Components,Rank #1,1,5,1.3367669797867578,CORRECT (Top-5 Hit: #5),False,True
+200,2026-01-09,OIL,Oil India Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,2,2.463713531672373,CORRECT (Top-5 Hit: #2),False,True
+191,2026-01-06,IPCALAB,Ipca Laboratories Ltd.,Healthcare,Rank #1,1,3,4.005652934379911,CORRECT (Top-5 Hit: #3),False,True
+207,2026-01-13,APOLLOTYRE,Apollo Tyres Ltd.,Automobile and Auto Components,Rank #1,1,8,3.3353153932672996,NEAR MISS (Top-10: #8),False,False
+202,2026-01-12,BSE,BSE Ltd.,Financial Services,Rank #1,1,1,4.536437027745803,CORRECT (Exact #1 Hit),True,True
+210,2026-01-14,INDIANB,Indian Bank,Financial Services,Rank #1,1,5,3.5035182225848636,CORRECT (Top-5 Hit: #5),False,True
+213,2026-01-16,OFSS,Oracle Financial Services Software Ltd.,Information Technology,Rank #1,1,3,5.689815812131976,CORRECT (Top-5 Hit: #3),False,True
+218,2026-01-20,KPITTECH,KPIT Technologies Ltd.,Information Technology,Rank #1,1,89,-2.7340716777682825,INCORRECT (Rank #89),False,False
+219,2026-01-21,AUBANK,AU Small Finance Bank Ltd.,Financial Services,Rank #1,1,69,-0.6342043980055606,INCORRECT (Rank #69),False,False
+225,2026-01-23,KPRMILL,K.P.R. Mill Ltd.,Textiles,Rank #1,1,59,-1.2677233786722892,INCORRECT (Rank #59),False,False
+220,2026-01-22,INDIANB,Indian Bank,Financial Services,Rank #1,1,4,5.4317850371802585,CORRECT (Top-5 Hit: #4),False,True
+227,2026-01-27,KPRMILL,K.P.R. Mill Ltd.,Textiles,Rank #1,1,2,6.066668969297596,CORRECT (Top-5 Hit: #2),False,True
+229,2026-01-28,BDL,Bharat Dynamics Ltd.,Capital Goods,Rank #1,1,4,6.84632834106694,CORRECT (Top-5 Hit: #4),False,True
+231,2026-01-29,NLCINDIA,NLC India Ltd.,Power,Rank #1,1,3,5.296689553836908,CORRECT (Top-5 Hit: #3),False,True
+235,2026-02-02,BIOCON,Biocon Ltd.,Healthcare,Rank #1,1,26,0.9133069747508213,INCORRECT (Rank #26),False,False
+236,2026-02-03,SCHAEFFLER,Schaeffler India Ltd.,Automobile and Auto Components,Rank #1,1,16,6.030226627744406,INCORRECT (Rank #16),False,False
+240,2026-02-04,NLCINDIA,NLC India Ltd.,Power,Rank #1,1,5,5.109346363226889,CORRECT (Top-5 Hit: #5),False,True
+248,2026-02-09,ITCHOTELS,ITC Hotels Ltd.,Consumer Services,Rank #1,1,13,4.103985761817277,INCORRECT (Rank #13),False,False
+243,2026-02-05,ANTHEM,Anthem Biosciences Ltd.,Healthcare,Rank #1,1,3,4.906663798194925,CORRECT (Top-5 Hit: #3),False,True
+247,2026-02-06,LICI,Life Insurance Corporation of India,Financial Services,Rank #1,1,4,7.395054322825823,CORRECT (Top-5 Hit: #4),False,True
+251,2026-02-10,SWIGGY,Swiggy Ltd.,Consumer Services,Rank #1,1,1,6.607727595553305,CORRECT (Exact #1 Hit),True,True
+256,2026-02-12,GODREJIND,Godrej Industries Ltd.,Diversified,Rank #1,1,69,-0.4675426884125122,INCORRECT (Rank #69),False,False
+254,2026-02-11,SJVN,SJVN Ltd.,Power,Rank #1,1,1,6.29120582532769,CORRECT (Exact #1 Hit),True,True
+260,2026-02-17,MAHABANK,Bank of Maharashtra,Financial Services,Rank #1,1,10,2.7167378858942897,NEAR MISS (Top-10: #10),False,False
+258,2026-02-16,GMRAIRPORT,GMR Airports Ltd.,Services,Rank #1,1,1,6.902050354166836,CORRECT (Exact #1 Hit),True,True
+264,2026-02-19,TATAINVEST,Tata Investment Corporation Ltd.,Financial Services,Rank #1,1,1,7.5000014289582,CORRECT (Exact #1 Hit),True,True
+262,2026-02-18,GODFRYPHLP,Godfrey Phillips India Ltd.,Fast Moving Consumer Goods,Rank #1,1,1,19.938996558498896,CORRECT (Exact #1 Hit),True,True
+267,2026-02-23,IPCALAB,Ipca Laboratories Ltd.,Healthcare,Rank #1,1,28,1.648491243124281,INCORRECT (Rank #28),False,False
+270,2026-02-24,LUPIN,Lupin Ltd.,Healthcare,Rank #1,1,49,0.39260814909038005,INCORRECT (Rank #49),False,False
+276,2026-02-26,JSWENERGY,JSW Energy Ltd.,Power,Rank #1,1,20,1.7549254292600087,INCORRECT (Rank #20),False,False
+277,2026-02-27,OFSS,Oracle Financial Services Software Ltd.,Information Technology,Rank #1,1,14,1.1011479209586208,INCORRECT (Rank #14),False,False
+271,2026-02-25,MANKIND,Mankind Pharma Ltd.,Healthcare,Rank #1,1,2,4.9155595658819085,CORRECT (Top-5 Hit: #2),False,True
+280,2026-03-04,NATIONALUM,National Aluminium Co. Ltd.,Metals & Mining,Rank #1,1,3,2.935087475636481,CORRECT (Top-5 Hit: #3),False,True
+281,2026-03-05,BDL,Bharat Dynamics Ltd.,Capital Goods,Rank #1,1,94,0.8902486664398305,INCORRECT (Rank #94),False,False
+282,2026-03-06,COCHINSHIP,Cochin Shipyard Ltd.,Capital Goods,Rank #1,1,5,2.949717135088731,CORRECT (Top-5 Hit: #5),False,True
+283,2026-03-10,MANKIND,Mankind Pharma Ltd.,Healthcare,Rank #1,1,21,3.439185534343835,INCORRECT (Rank #21),False,False
+284,2026-03-11,ASTRAL,Astral Ltd.,Capital Goods,Rank #1,1,3,5.154460435732959,CORRECT (Top-5 Hit: #3),False,True
+288,2026-03-12,IPCALAB,Ipca Laboratories Ltd.,Healthcare,Rank #1,1,22,1.7537046504641263,INCORRECT (Rank #22),False,False
+289,2026-03-13,BIOCON,Biocon Ltd.,Healthcare,Rank #1,1,61,-2.2055101879761074,INCORRECT (Rank #61),False,False
+290,2026-03-16,NHPC,NHPC Ltd.,Power,Rank #1,1,47,0.3867683138729908,INCORRECT (Rank #47),False,False
+293,2026-03-17,NATIONALUM,National Aluminium Co. Ltd.,Metals & Mining,Rank #1,1,2,6.151780284864741,CORRECT (Top-5 Hit: #2),False,True
+297,2026-03-20,LLOYDSME,Lloyds Metals And Energy Ltd.,Metals & Mining,Rank #1,1,4,5.095323574030986,CORRECT (Top-5 Hit: #4),False,True
+304,2026-03-25,IREDA,Indian Renewable Energy Development Agency Ltd.,Financial Services,Rank #1,1,16,4.223129371470867,INCORRECT (Rank #16),False,False
+302,2026-03-24,LINDEINDIA,Linde India Ltd.,Chemicals,Rank #1,1,1,9.290466872731228,CORRECT (Exact #1 Hit),True,True
+308,2026-03-27,LICHSGFIN,LIC Housing Finance Ltd.,Financial Services,Rank #1,1,5,1.9645409146380628,CORRECT (Top-5 Hit: #5),False,True
+310,2026-03-30,NATIONALUM,National Aluminium Co. Ltd.,Metals & Mining,Rank #1,1,2,4.070079870684611,CORRECT (Top-5 Hit: #2),False,True
+312,2026-04-01,GICRE,General Insurance Corporation of India,Financial Services,Rank #1,1,29,4.725169160259478,INCORRECT (Rank #29),False,False
+315,2026-04-08,ATGL,Adani Total Gas Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,15,7.593119791382053,INCORRECT (Rank #15),False,False
+314,2026-04-06,NMDC,NMDC Ltd.,Metals & Mining,Rank #1,1,10,4.252048689762912,NEAR MISS (Top-10: #10),False,False
+319,2026-04-09,GVT&D,GE Vernova T&D India Ltd.,Capital Goods,Rank #1,1,3,4.998522700252957,CORRECT (Top-5 Hit: #3),False,True
+330,2026-04-16,NLCINDIA,NLC India Ltd.,Power,Rank #1,1,1,8.194035898517523,CORRECT (Exact #1 Hit),True,True
+322,2026-04-10,NIACL,The New India Assurance Company Ltd.,Financial Services,Rank #1,1,1,19.83223899271884,CORRECT (Exact #1 Hit),True,True
+332,2026-04-17,ABBOTINDIA,Abbott India Ltd.,Healthcare,Rank #1,1,129,-0.2900233498091103,INCORRECT (Rank #129),False,False
+327,2026-04-15,RVNL,Rail Vikas Nigam Ltd.,Construction,Rank #1,1,3,5.618301254896466,CORRECT (Top-5 Hit: #3),False,True
+333,2026-04-21,INDIANB,Indian Bank,Financial Services,Rank #1,1,123,-0.7810018072086493,INCORRECT (Rank #123),False,False
+334,2026-04-22,3MINDIA,3M India Ltd.,Diversified,Rank #1,1,9,3.0552432515036076,NEAR MISS (Top-10: #9),False,False
+335,2026-04-24,FLUOROCHEM,Gujarat Fluorochemicals Ltd.,Chemicals,Rank #1,1,6,2.11270274590674,NEAR MISS (Top-10: #6),False,False
+337,2026-04-27,LTTS,L&T Technology Services Ltd.,Information Technology,Rank #1,1,3,6.213386544730051,CORRECT (Top-5 Hit: #3),False,True
+339,2026-04-28,OIL,Oil India Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,1,4.4099138488224945,CORRECT (Exact #1 Hit),True,True
+342,2026-04-29,BHARTIHEXA,Bharti Hexacom Ltd.,Telecommunication,Rank #1,1,26,1.159248728341751,INCORRECT (Rank #26),False,False
+344,2026-05-04,360ONE,360 ONE WAM Ltd.,Financial Services,Rank #1,1,13,3.0783332367845455,INCORRECT (Rank #13),False,False
+354,2026-05-06,M&MFIN,Mahindra & Mahindra Financial Services Ltd.,Financial Services,Rank #1,1,4,7.134684251988929,CORRECT (Top-5 Hit: #4),False,True
+349,2026-05-05,ABCAPITAL,Aditya Birla Capital Ltd.,Financial Services,Rank #1,1,1,4.337140302235641,CORRECT (Exact #1 Hit),True,True
+358,2026-05-07,ENDURANCE,Endurance Technologies Ltd.,Automobile and Auto Components,Rank #1,1,3,7.730865115686248,CORRECT (Top-5 Hit: #3),False,True
+363,2026-05-12,ICICIGI,ICICI Lombard General Insurance Company Ltd.,Financial Services,Rank #1,1,71,-2.5046456098743777,INCORRECT (Rank #71),False,False
+360,2026-05-08,HEXT,Hexaware Technologies Ltd.,Information Technology,Rank #1,1,4,5.460867458619542,CORRECT (Top-5 Hit: #4),False,True
+365,2026-05-13,HINDPETRO,Hindustan Petroleum Corporation Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,5,5.46094117614399,CORRECT (Top-5 Hit: #5),False,True
+370,2026-05-15,BHARTIHEXA,Bharti Hexacom Ltd.,Telecommunication,Rank #1,1,2,3.484145584805528,CORRECT (Top-5 Hit: #2),False,True
+366,2026-05-14,TATACOMM,Tata Communications Ltd.,Telecommunication,Rank #1,1,3,6.241974273739437,CORRECT (Top-5 Hit: #3),False,True
+372,2026-05-18,POLICYBZR,PB Fintech Ltd.,Financial Services,Rank #1,1,5,3.5538706547836045,CORRECT (Top-5 Hit: #5),False,True
+374,2026-05-19,KPRMILL,K.P.R. Mill Ltd.,Textiles,Rank #1,1,3,4.90733216101756,CORRECT (Top-5 Hit: #3),False,True
+376,2026-05-20,GVT&D,GE Vernova T&D India Ltd.,Capital Goods,Rank #1,1,2,6.706501085677859,CORRECT (Top-5 Hit: #2),False,True
+379,2026-05-21,ATGL,Adani Total Gas Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,3,4.50375968269034,CORRECT (Top-5 Hit: #3),False,True
+382,2026-05-22,DIXON,Dixon Technologies (India) Ltd.,Consumer Durables,Rank #1,1,2,4.121513590335761,CORRECT (Top-5 Hit: #2),False,True
+386,2026-05-25,ASHOKLEY,Ashok Leyland Ltd.,Capital Goods,Rank #1,1,4,3.710259862581369,CORRECT (Top-5 Hit: #4),False,True
+391,2026-05-26,EXIDEIND,Exide Industries Ltd.,Automobile and Auto Components,Rank #1,1,2,5.776178624362015,CORRECT (Top-5 Hit: #2),False,True
+396,2026-05-27,SUZLON,Suzlon Energy Ltd.,Capital Goods,Rank #1,1,7,5.40490445085275,NEAR MISS (Top-10: #7),False,False
+399,2026-05-29,IREDA,Indian Renewable Energy Development Agency Ltd.,Financial Services,Rank #1,1,7,2.3425515315444345,NEAR MISS (Top-10: #7),False,False
+408,2026-06-03,GVT&D,GE Vernova T&D India Ltd.,Capital Goods,Rank #1,1,4,3.8381081714191168,CORRECT (Top-5 Hit: #4),False,True
+404,2026-06-01,NMDC,NMDC Ltd.,Metals & Mining,Rank #1,1,1,4.977844060860009,CORRECT (Exact #1 Hit),True,True
+409,2026-06-04,POWERINDIA,Hitachi Energy India Ltd.,Capital Goods,Rank #1,1,4,3.7936980770198017,CORRECT (Top-5 Hit: #4),False,True
+410,2026-06-05,GROWW,Billionbrains Garage Ventures Ltd.,Financial Services,Rank #1,1,1,3.1184226764730756,CORRECT (Exact #1 Hit),True,True
+419,2026-06-10,COROMANDEL,Coromandel International Ltd.,Chemicals,Rank #1,1,1,4.072818817631373,CORRECT (Exact #1 Hit),True,True
+414,2026-06-09,MAHABANK,Bank of Maharashtra,Financial Services,Rank #1,1,3,5.476699631860873,CORRECT (Top-5 Hit: #3),False,True
+421,2026-06-12,JSWINFRA,JSW Infrastructure Ltd.,Services,Rank #1,1,8,5.645305126625146,NEAR MISS (Top-10: #8),False,False
+432,2026-06-17,KEI,KEI Industries Ltd.,Capital Goods,Rank #1,1,6,4.771187227327578,NEAR MISS (Top-10: #6),False,False
+434,2026-06-18,ICICIAMC,ICICI Prudential Asset Management Company Ltd.,Financial Services,Rank #1,1,5,5.57452549367405,CORRECT (Top-5 Hit: #5),False,True
+426,2026-06-15,KALYANKJIL,Kalyan Jewellers India Ltd.,Consumer Durables,Rank #1,1,1,11.094999751574568,CORRECT (Exact #1 Hit),True,True
+429,2026-06-16,SUZLON,Suzlon Energy Ltd.,Capital Goods,Rank #1,1,2,4.228897763229559,CORRECT (Top-5 Hit: #2),False,True
+436,2026-06-19,AUROPHARMA,Aurobindo Pharma Ltd.,Healthcare,Rank #1,1,7,3.747322815404687,NEAR MISS (Top-10: #7),False,False
+439,2026-06-22,TATACOMM,Tata Communications Ltd.,Telecommunication,Rank #1,1,6,3.665521950620694,NEAR MISS (Top-10: #6),False,False
+444,2026-06-23,LAURUSLABS,Laurus Labs Ltd.,Healthcare,Rank #1,1,1,3.140885494750314,CORRECT (Exact #1 Hit),True,True
+449,2026-06-25,ASHOKLEY,Ashok Leyland Ltd.,Capital Goods,Rank #1,1,3,3.7247362192679363,CORRECT (Top-5 Hit: #3),False,True
+445,2026-06-24,M&MFIN,Mahindra & Mahindra Financial Services Ltd.,Financial Services,Rank #1,1,3,6.729616457899465,CORRECT (Top-5 Hit: #3),False,True
+452,2026-06-29,LLOYDSME,Lloyds Metals And Energy Ltd.,Metals & Mining,Rank #1,1,5,4.897172392367478,CORRECT (Top-5 Hit: #5),False,True
+461,2026-07-01,HEXT,Hexaware Technologies Ltd.,Information Technology,Rank #1,1,1,7.1477227489899,CORRECT (Exact #1 Hit),True,True
+457,2026-06-30,COCHINSHIP,Cochin Shipyard Ltd.,Capital Goods,Rank #1,1,1,5.6248240846064865,CORRECT (Exact #1 Hit),True,True
+465,2026-07-02,EXIDEIND,Exide Industries Ltd.,Automobile and Auto Components,Rank #1,1,1,7.429231063508716,CORRECT (Exact #1 Hit),True,True
+468,2026-07-03,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,Rank #1,1,3,4.220853085108549,CORRECT (Top-5 Hit: #3),False,True
+475,2026-07-07,PERSISTENT,Persistent Systems Ltd.,Information Technology,Rank #1,1,6,3.58369707403894,NEAR MISS (Top-10: #6),False,False
+471,2026-07-06,ABBOTINDIA,Abbott India Ltd.,Healthcare,Rank #1,1,4,3.726589605057904,CORRECT (Top-5 Hit: #4),False,True
+479,2026-07-08,OIL,Oil India Ltd.,Oil Gas & Consumable Fuels,Rank #1,1,5,1.7015234419094458,CORRECT (Top-5 Hit: #5),False,True
+484,2026-07-10,ICICIPRULI,ICICI Prudential Life Insurance Company Ltd.,Financial Services,Rank #1,1,9,4.004482047616873,NEAR MISS (Top-10: #9),False,False
+488,2026-07-13,HUDCO,Housing & Urban Development Corporation Ltd.,Financial Services,Rank #1,1,20,1.5848508751572725,INCORRECT (Rank #20),False,False
+480,2026-07-09,KALYANKJIL,Kalyan Jewellers India Ltd.,Consumer Durables,Rank #1,1,1,18.401713304109432,CORRECT (Exact #1 Hit),True,True
+489,2026-07-14,CONCOR,Container Corporation of India Ltd.,Services,Rank #1,1,2,6.293771165176492,CORRECT (Top-5 Hit: #2),False,True
+496,2026-07-16,ENDURANCE,Endurance Technologies Ltd.,Automobile and Auto Components,Rank #1,1,30,0.6299595253013508,INCORRECT (Rank #30),False,False
+492,2026-07-15,LTTS,L&T Technology Services Ltd.,Information Technology,Rank #1,1,1,6.534874276218816,CORRECT (Exact #1 Hit),True,True
+503,2026-07-20,NTPCGREEN,NTPC Green Energy Ltd.,Power,Rank #1,1,96,0.010875433399708595,INCORRECT (Rank #96),False,False
+504,2026-07-21,M&MFIN,Mahindra & Mahindra Financial Services Ltd.,Financial Services,Rank #1,1,1,8.463810058510871,CORRECT (Exact #1 Hit),True,True
+507,2026-07-22,PIIND,PI Industries Ltd.,Chemicals,Rank #1,1,21,0.5891625734580278,INCORRECT (Rank #21),False,False
+499,2026-07-17,FEDERALBNK,Federal Bank Ltd.,Financial Services,Rank #1,1,2,6.858541641058616,CORRECT (Top-5 Hit: #2),False,True
+508,2026-07-24,MPHASIS,MphasiS Ltd.,Information Technology,Rank #1,1,12,2.4950814257795626,INCORRECT (Rank #12),False,False
+513,2026-07-28,MPHASIS,MphasiS Ltd.,Information Technology,Rank #1,1,6,3.463799482120862,NEAR MISS (Top-10: #6),False,False
+509,2026-07-27,AUBANK,AU Small Finance Bank Ltd.,Financial Services,Rank #1,1,4,4.800786828089831,CORRECT (Top-5 Hit: #4),False,True
+520,2026-07-30,ALKEM,Alkem Laboratories Ltd.,Healthcare,Rank #1,1,6,2.5385708218625838,NEAR MISS (Top-10: #6),False,False
+516,2026-07-29,SWIGGY,Swiggy Ltd.,Consumer Services,Rank #1,1,1,7.028716441832509,CORRECT (Exact #1 Hit),True,True
+530,2026-08-04,SAIL,Steel Authority of India Ltd.,Metals & Mining,Rank #1,1,2,5.181820031368371,CORRECT (Top-5 Hit: #2),False,True
+531,2026-08-05,MPHASIS,MphasiS Ltd.,Information Technology,Rank #1,1,4,3.361344537815126,CORRECT (Top-5 Hit: #4),False,True
+522,2026-07-31,ASHOKLEY,Ashok Leyland Ltd.,Capital Goods,Rank #1,1,2,5.117336027132056,CORRECT (Top-5 Hit: #2),False,True
+527,2026-08-03,JUBLFOOD,Jubilant Foodworks Ltd.,Consumer Services,Rank #1,1,1,7.244723331431831,CORRECT (Exact #1 Hit),True,True
+536,2026-08-07,TATAINVEST,Tata Investment Corporation Ltd.,Financial Services,Rank #1,1,3,3.979920521628734,CORRECT (Top-5 Hit: #3),False,True
+533,2026-08-06,BDL,Bharat Dynamics Ltd.,Capital Goods,Rank #1,1,2,4.758064516129032,CORRECT (Top-5 Hit: #2),False,True
+543,2026-08-12,FLUOROCHEM,Gujarat Fluorochemicals Ltd.,Chemicals,Rank #1,1,8,3.387515900226954,NEAR MISS (Top-10: #8),False,False
+539,2026-08-10,NAUKRI,Info Edge (India) Ltd.,Consumer Services,Rank #1,1,3,4.627434009008875,CORRECT (Top-5 Hit: #3),False,True
+540,2026-08-11,MCX,Multi Commodity Exchange of India Ltd.,Financial Services,Rank #1,1,3,4.917908321705291,CORRECT (Top-5 Hit: #3),False,True
+549,2026-08-14,TIINDIA,Tube Investments of India Ltd.,Automobile and Auto Components,Rank #1,1,126,-1.6726618705035974,INCORRECT (Rank #126),False,False
+546,2026-08-13,ASTRAL,Astral Ltd.,Capital Goods,Rank #1,1,1,8.743166067534055,CORRECT (Exact #1 Hit),True,True
+551,2026-08-17,BHEL,Bharat Heavy Electricals Ltd.,Capital Goods,Rank #1,1,5,3.3791794136833087,CORRECT (Top-5 Hit: #5),False,True
+556,2026-08-19,NAM-INDIA,Nippon Life India Asset Management Ltd.,Financial Services,Rank #1,1,3,3.963781426771107,CORRECT (Top-5 Hit: #3),False,True
+558,2026-08-20,PREMIERENE,Premier Energies Ltd.,Capital Goods,Rank #1,1,4,3.792415169660679,CORRECT (Top-5 Hit: #4),False,True
+554,2026-08-18,TIINDIA,Tube Investments of India Ltd.,Automobile and Auto Components,Rank #1,1,1,7.937554001888363,CORRECT (Exact #1 Hit),True,True
+562,2026-08-21,PRESTIGE,Prestige Estates Projects Ltd.,Realty,Rank #1,1,3,2.869757174392936,CORRECT (Top-5 Hit: #3),False,True
+566,2026-08-25,LAURUSLABS,Laurus Labs Ltd.,Healthcare,Rank #1,1,4,3.6202082827248754,CORRECT (Top-5 Hit: #4),False,True
+572,2026-08-27,INDUSTOWER,Indus Towers Ltd.,Telecommunication,Rank #1,1,36,0.5957108623990969,INCORRECT (Rank #36),False,False
+564,2026-08-24,SAIL,Steel Authority of India Ltd.,Metals & Mining,Rank #1,1,3,3.5685385351263976,CORRECT (Top-5 Hit: #3),False,True
+568,2026-08-26,MAHABANK,Bank of Maharashtra,Financial Services,Rank #1,1,3,4.773563857474314,CORRECT (Top-5 Hit: #3),False,True
+574,2026-08-28,PERSISTENT,Persistent Systems Ltd.,Information Technology,Rank #1,1,3,3.9087371772196677,CORRECT (Top-5 Hit: #3),False,True
+583,2026-09-01,PERSISTENT,Persistent Systems Ltd.,Information Technology,Rank #1,1,2,3.673250513897578,CORRECT (Top-5 Hit: #2),False,True
+578,2026-08-31,AUROPHARMA,Aurobindo Pharma Ltd.,Healthcare,Rank #1,1,1,4.357864768978991,CORRECT (Exact #1 Hit),True,True
+585,2026-09-03,MAHABANK,Bank of Maharashtra,Financial Services,Rank #1,1,2,4.757279243149262,CORRECT (Top-5 Hit: #2),False,True
+590,2026-09-04,GICRE,General Insurance Corporation of India,Financial Services,Rank #1,1,2,4.534855231068088,CORRECT (Top-5 Hit: #2),False,True
+594,2026-09-09,PAYTM,One 97 Communications Ltd.,Financial Services,Rank #1,1,2,4.880239520958083,CORRECT (Top-5 Hit: #2),False,True
+597,2026-09-16,COLPAL,Colgate Palmolive (India) Ltd.,Fast Moving Consumer Goods,Rank #1,1,13,2.180956441628021,INCORRECT (Rank #13),False,False
