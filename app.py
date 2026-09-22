@@ -10,9 +10,12 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
-import yfinance as yf
+try:
+    import yfinance as yf
+    YFINANCE_AVAILABLE = True
+except ImportError:
+    YFINANCE_AVAILABLE = False
 
-# Configure page
 st.set_page_config(
     page_title="Mid-Cap Momentum Live Alpha Dashboard",
     page_icon="📈",
@@ -79,16 +82,17 @@ if os.path.exists(orders_file):
             
             # Fetch latest prices via yfinance
             live_prices = {}
-            try:
-                yf_data = yf.download(symbols, period="1d", interval="5m", progress=False)
-                if not yf_data.empty and 'Close' in yf_data:
-                    last_closes = yf_data['Close'].iloc[-1]
-                    for s in orders_df['Symbol']:
-                        sym_ns = f"{s}.NS"
-                        if sym_ns in last_closes and not pd.isna(last_closes[sym_ns]):
-                            live_prices[s] = float(last_closes[sym_ns])
-            except Exception as yf_err:
-                pass
+            if YFINANCE_AVAILABLE:
+                try:
+                    yf_data = yf.download(symbols, period="1d", interval="5m", progress=False)
+                    if not yf_data.empty and 'Close' in yf_data:
+                        last_closes = yf_data['Close'].iloc[-1]
+                        for s in orders_df['Symbol']:
+                            sym_ns = f"{s}.NS"
+                            if sym_ns in last_closes and not pd.isna(last_closes[sym_ns]):
+                                live_prices[s] = float(last_closes[sym_ns])
+                except Exception as yf_err:
+                    pass
 
             # Build Live Tracking Rows
             live_rows = []
