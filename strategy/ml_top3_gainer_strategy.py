@@ -17,7 +17,22 @@ import numpy as np
 import pandas as pd
 import lightgbm as lgb
 
-from strategy.improved_point_in_time_strategy import NIFTY100_LARGE_CAP_EXCLUSIONS
+# SEBI Official Large-Cap Exclusion Set (Nifty 100 Top Companies by Market Cap)
+# Any symbol in this set is rejected to guarantee 100% pure Mid-Cap universe.
+NIFTY100_LARGE_CAP_EXCLUSIONS = frozenset({
+    # Nifty 50 Core
+    'RELIANCE', 'TCS', 'HDFCBANK', 'ICICIBANK', 'BHARTIARTL', 'SBIN', 'INFY', 'LICI',
+    'ITC', 'HINDUNILVR', 'LT', 'BAJFINANCE', 'HCLTECH', 'MARUTI', 'SUNPHARMA',
+    'ADANIENT', 'KOTAKBANK', 'TITAN', 'ONGC', 'TATAMOTORS', 'NTPC', 'AXISBANK',
+    'ADANIGREEN', 'ADANIPORTS', 'COALINDIA', 'POWERGRID', 'BAJAJFINSV', 'M&M',
+    'SIEMENS', 'HAL', 'ULTRACEMCO', 'IOC', 'JSWSTEEL', 'GRASIM',
+    # Nifty Next 50 / Nifty 100 additions
+    'DLF', 'ZOMATO', 'VBL', 'TRENT', 'BEL', 'INDIGO', 'WIPRO', 'TECHM',
+    'EICHERMOT', 'NESTLEIND', 'DIVISLAB', 'BPCL', 'SHRIRAMFIN', 'HINDALCO',
+    'GAIL', 'VEDL', 'TATASTEEL',
+    # Previously misclassified large caps
+    'JINDALSTEL', 'INDUSTOWER', 'BHEL',
+})
 
 
 class MLTop3GainerStrategy:

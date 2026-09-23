@@ -24,11 +24,11 @@ import numpy as np
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
-from strategy.improved_point_in_time_strategy import (
-    ImprovedPointInTimeStrategy,
+from strategy.ml_top3_gainer_strategy import (
+    MLTop3GainerStrategy,
     NIFTY100_LARGE_CAP_EXCLUSIONS,
 )
-from strategy.ml_top3_gainer_strategy import MLTop3GainerStrategy
+from strategy.improved_point_in_time_strategy import ImprovedPointInTimeStrategy
 
 LARGE_CAP_EXCLUSIONS = NIFTY100_LARGE_CAP_EXCLUSIONS
 
