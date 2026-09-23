@@ -114,6 +114,8 @@ def run_scanner(
             if shares <= 0:
                 continue
 
+            rationale = strat.generate_trade_rationale(row, rank_idx=rank_idx)
+
             orders.append({
                 'Rank': f"#{rank_idx}",
                 'Symbol': sym,
@@ -124,12 +126,20 @@ def run_scanner(
                 'Stop Loss (₹)': round(initial_sl, 2),
                 'Shares': shares,
                 'Capital (₹)': round(allocated_cap, 2),
-                'Equity %': round((allocated_cap / active_equity) * 100, 1)
+                'Equity %': round((allocated_cap / active_equity) * 100, 1),
+                'Trade Logic': rationale['summary'],
+                'Key Drivers': " • ".join(rationale['drivers']),
+                'Volume Surge': f"{rationale['vol_surge']:.2f}x",
+                'Range Position': f"{rationale['range_pos']:.0f}%",
+                'Sector Alpha': f"{rationale['sector_alpha']:+.2f}%",
+                'Dist 20-DMA': f"{rationale['dist_sma20']:+.1f}%",
+                'RSI': f"{rationale['rsi']:.1f}"
             })
 
             print(f"  #{rank_idx}: [{sym:<11}] | TGPI Score: {row['tgpi_score']:.3f} | Top-3 Prob: {row['prob_top3']*100:.1f}%")
             print(f"       Entry Limit: Rs. {entry_price:,.2f} | Shares: {shares:,} | Capital: Rs. {allocated_cap:,.2f} ({(allocated_cap/active_equity)*100:.1f}% equity)")
             print(f"       Initial SL (-2.5%): Rs. {initial_sl:,.2f} | Target: Dynamic Trailing Stop (Runners)")
+            print(f"       Rationale: {rationale['summary'][:90]}...")
 
         orders_df = pd.DataFrame(orders)
         orders_df.to_csv("daily_live_scan_orders.csv", index=False)

@@ -110,7 +110,14 @@ class OrderManager:
                     'status': 'OPEN',
                     'exit_price': None,
                     'exit_time': None,
-                    'exit_reason': None
+                    'exit_reason': None,
+                    'trade_logic': str(row.get('Trade Logic', '')),
+                    'key_drivers': str(row.get('Key Drivers', '')),
+                    'volume_surge': str(row.get('Volume Surge', '')),
+                    'range_position': str(row.get('Range Position', '')),
+                    'sector_alpha': str(row.get('Sector Alpha', '')),
+                    'dist_20dma': str(row.get('Dist 20-DMA', '')),
+                    'rsi': str(row.get('RSI', ''))
                 }
 
                 # Deduct cash for paper purchase

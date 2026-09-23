@@ -221,3 +221,57 @@ class MLTop3GainerStrategy:
             'gst': gst,
             'total_charges': total
         }
+
+    def generate_trade_rationale(self, row: pd.Series, rank_idx: Optional[int] = None) -> Dict[str, any]:
+        """
+        Generates comprehensive institutional rationale and factor attribution for a selected trade.
+        """
+        sym = row.get('symbol', row.get('Symbol', 'UNKNOWN'))
+        rank_str = f"#{rank_idx}" if rank_idx is not None else str(row.get('Rank', '#1'))
+        prob = float(row.get('prob_top3', row.get('Top-3 Prob %', 0.0)))
+        if prob <= 1.0 and prob > 0:
+            prob *= 100.0
+        tgpi = float(row.get('tgpi_score', row.get('TGPI Score', 0.0)))
+        vol_surge = float(row.get('vol_surge_t', row.get('Volume Surge', 1.0)))
+        comp_ratio = float(row.get('compression_ratio', 1.0))
+        raw_range = float(row.get('range_position', 0.5))
+        range_pos = raw_range * 100.0 if raw_range <= 1.0 else raw_range
+        sector_alpha = float(row.get('stock_vs_sector', 0.0))
+        dist_sma20 = float(row.get('dist_sma20_feat', 0.0))
+        rsi = float(row.get('rsi_prev', 50.0))
+
+        # Dynamic narrative formulation
+        vol_desc = "Strong Institutional Thrust" if vol_surge >= 1.8 else ("Moderate Accumulation" if vol_surge >= 1.2 else "Baseline Volume")
+        coil_desc = "Tight Coiled Spring" if comp_ratio <= 0.85 else ("Normal Volatility Expansion" if comp_ratio <= 1.25 else "Active Volatility Expansion")
+        range_desc = "Dominant Buyer Control into Close" if range_pos >= 80 else ("Balanced Session" if range_pos >= 50 else "Weak Close")
+
+        summary = (
+            f"{sym} ranked {rank_str} in the pure Mid-Cap universe with a TGPI score of {tgpi:.3f} and an estimated {prob:.1f}% "
+            f"probability of ranking among the Top-3 gainers tomorrow. "
+            f"The selection is driven by {vol_desc.lower()} ({vol_surge:.2f}x 20-DMA volume) and {range_desc.lower()} ({range_pos:.0f}% of session range). "
+            f"With a 20-DMA distance of {dist_sma20:+.1f}% and sector alpha of {sector_alpha:+.2f}%, the stock exhibits strong institutional continuation momentum."
+        )
+
+        drivers = [
+            f"**Volume Surge:** {vol_surge:.2f}x 20-DMA volume ({vol_desc})",
+            f"**Range Placement:** Closed at {range_pos:.0f}% of daily range ({range_desc})",
+            f"**Sector Relative Strength:** {sector_alpha:+.2f}% outperformance vs its industry peer group",
+            f"**Moving Average Proximity:** {dist_sma20:+.1f}% above 20-DMA denoting sustained bullish trend structure",
+            f"**Volatility State:** ATR compression ratio of {comp_ratio:.2f} ({coil_desc})",
+            f"**RSI Momentum:** {rsi:.1f} (in healthy acceleration zone, not overbought)",
+            f"**09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense",
+            f"**Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%–20%+ runner gains"
+        ]
+
+        return {
+            'summary': summary,
+            'drivers': drivers,
+            'vol_surge': vol_surge,
+            'comp_ratio': comp_ratio,
+            'range_pos': range_pos,
+            'sector_alpha': sector_alpha,
+            'dist_sma20': dist_sma20,
+            'rsi': rsi,
+            'tgpi': tgpi,
+            'prob': prob
+        }

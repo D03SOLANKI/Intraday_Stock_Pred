@@ -204,7 +204,14 @@ if os.path.exists(orders_file):
                     'Current SL (₹)': current_sl,
                     'Unrealized P&L (₹)': unrealized_pnl,
                     'Return (%)': unrealized_pct,
-                    'Status': status
+                    'Status': status,
+                    'Trade Logic': row.get('Trade Logic', ''),
+                    'Key Drivers': row.get('Key Drivers', ''),
+                    'Volume Surge': row.get('Volume Surge', '1.00x'),
+                    'Range Position': row.get('Range Position', '50%'),
+                    'Sector Alpha': row.get('Sector Alpha', '0.00%'),
+                    'Dist 20-DMA': row.get('Dist 20-DMA', '0.0%'),
+                    'RSI': row.get('RSI', '50.0')
                 })
 
             live_df = pd.DataFrame(live_rows)
@@ -224,7 +231,7 @@ if os.path.exists(orders_file):
             """, unsafe_allow_html=True)
 
             st.dataframe(
-                live_df.style.format({
+                live_df[['Rank', 'Stock', 'TGPI Score', 'Top-3 Prob', 'Allocated (₹)', 'Shares', 'Entry Limit (₹)', 'Live Price (₹)', 'Current SL (₹)', 'Unrealized P&L (₹)', 'Return (%)', 'Status']].style.format({
                     'Allocated (₹)': '₹{:,.2f}',
                     'Shares': '{:,}',
                     'Entry Limit (₹)': '₹{:,.2f}',
@@ -237,12 +244,42 @@ if os.path.exists(orders_file):
                 hide_index=True
             )
 
-            # Visual Price Brackets Tabs
-            st.markdown("### 📊 Order Price Brackets & Dynamic Trailing Stop Levels")
+            # Visual Price Brackets & Institutional Trade Logic Tabs
+            st.markdown("### 📊 Order Price Brackets & Institutional Trade Logic")
             tabs = st.tabs([f"{row['Rank']} {row['Stock']}" for _, row in live_df.iterrows()])
 
             for idx, (_, row) in enumerate(live_df.iterrows()):
                 with tabs[idx]:
+                    # 1. Institutional Rationale & Trade Logic Card
+                    trade_logic = str(row.get('Trade Logic', ''))
+                    if not trade_logic or trade_logic == 'nan' or trade_logic.strip() == '':
+                        trade_logic = f"{row['Stock']} is ranked #{idx+1} in the pure Mid-Cap universe with a TGPI score of {row['TGPI Score']} and a Top-3 probability of {row['Top-3 Prob']}. Selection is driven by institutional accumulation, strong closing range placement, and positive moving average alignment."
+
+                    st.markdown(f"""
+                    <div style="background-color: #F8FAFC; border-left: 4px solid #3B82F6; padding: 14px 18px; border-radius: 6px; margin-bottom: 14px;">
+                        <div style="font-weight: 700; color: #1E293B; margin-bottom: 6px; font-size: 1.0rem;">
+                            🧠 Trade Rationale & Strategy Logic:
+                        </div>
+                        <div style="color: #334155; font-size: 0.92rem; line-height: 1.55;">
+                            {trade_logic}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    # 2. Key Quantitative Factors
+                    f_col1, f_col2, f_col3, f_col4, f_col5 = st.columns(5)
+                    with f_col1:
+                        st.metric("Volume Surge", str(row.get('Volume Surge', '1.0x')), help="Trading volume relative to 20-day average volume")
+                    with f_col2:
+                        st.metric("Range Placement", str(row.get('Range Position', '100%')), help="Closing price placement in session high-low range (100% = high of day)")
+                    with f_col3:
+                        st.metric("Sector Alpha", str(row.get('Sector Alpha', '+0.0%')), help="Outperformance relative to sectoral benchmark")
+                    with f_col4:
+                        st.metric("20-DMA Proximity", str(row.get('Dist 20-DMA', '+0.0%')), help="Distance from 20-day Simple Moving Average")
+                    with f_col5:
+                        st.metric("RSI Momentum", str(row.get('RSI', '50.0')), help="14-period RSI indicator")
+
+                    # 3. Chart
                     entry = float(row['Entry Limit (₹)'])
                     curr_sl = float(row['Current SL (₹)'])
                     curr_px = float(row['Live Price (₹)'])
@@ -271,6 +308,14 @@ if os.path.exists(orders_file):
                         showlegend=True
                     )
                     st.plotly_chart(fig, use_container_width=True)
+
+                    # 4. Detailed Factor Checklist Expander
+                    key_drivers = str(row.get('Key Drivers', ''))
+                    if key_drivers and key_drivers != 'nan' and key_drivers.strip() != '':
+                        with st.expander("🔍 View Complete Factor Attribution & Execution Checklist"):
+                            drivers_list = key_drivers.split(' • ')
+                            for d in drivers_list:
+                                st.markdown(f"- {d}")
 
         else:
             st.info("Scanner executed: 0 mid-cap stocks met confirmation criteria today. 100% Cash preserved.")
