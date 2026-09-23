@@ -18,8 +18,10 @@ class DynamicCompoundingStrategy:
         self.initial_equity = initial_equity
         self.equity = initial_equity
         self.position_equity_weight = 0.28    # Tier 4: 28% of active equity per position
-        self.max_concurrent_positions = 4     # Max 4 concurrent slots
+        self.max_concurrent_positions = 2     # Strict: Maximum 2 concurrent positions
+        self.max_allowed_candidates = 2       # Selectivity rule: If > 2 qualify, REJECT day
         self.max_adv_participation = 0.05     # Strict 5% 20-day ADV liquidity limit
+        self.portfolio_take_profit_inr = 100_000.0  # Mandatory Portfolio-Level Take-Profit Exit (Rs. 1,00,000)
         
         # Pre-Market Parameters (08:45 IST, Strictly t-1)
         self.coiling_dma_proximity_max = 2.5  # 20-DMA proximity threshold
@@ -40,12 +42,6 @@ class DynamicCompoundingStrategy:
         # Execution & Slippage
         self.entry_slippage_pct = 0.002       # 0.20% adverse entry slippage
         self.exit_slippage_pct = 0.002        # 0.20% adverse exit slippage
-        
-        self.catalyst_symbols = {
-            'NIACL', 'GICRE', 'TATAINVEST', 'GVT&D', 'JSL', 'JINDALSTEL', 'BSE', 'IDEA', 'INDUSTOWER', 
-            'APARINDS', 'RVNL', 'BHEL', 'WAAREEENER', 'PATANJALI', 'AWL', 'DABUR', 'POLYCAB', 'THERMAX', 
-            'SUZLON', 'TATACOMM', 'VOLTAS', 'KPRMILL', 'POLICYBZR', 'SJVN', 'JUBLFOOD', 'HONAUT', 'GODREJIND'
-        }
 
     def compute_pit_features(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -53,7 +49,6 @@ class DynamicCompoundingStrategy:
         """
         out = df.copy()
         out['dist_sma20_abs'] = out['dist_sma20'].abs()
-        out['has_catalyst'] = out['symbol'].isin(self.catalyst_symbols)
         
         # Prior day volume thrust (t-1 volume / 20-DMA volume)
         out['vol_prev_ratio'] = out.groupby('symbol')['volume'].transform(
@@ -86,8 +81,8 @@ class DynamicCompoundingStrategy:
         # Opening Gap-Fill Rejection: low >= prev_close (gap holds as support)
         out['gap_rejected'] = out['low'] >= (out['prev_close'] * 0.998)
         
-        # Quality catalyst or volume momentum trigger
-        out['quality_trigger'] = out['has_catalyst'] | (out['vol_prev_ratio'] >= self.vol_prev_ratio_min)
+        # Quality volume momentum trigger
+        out['quality_trigger'] = (out['vol_prev_ratio'] >= self.vol_prev_ratio_min)
         
         # Eligible Point-in-Time Candidates
         out['pit_eligible'] = (
@@ -99,10 +94,9 @@ class DynamicCompoundingStrategy:
         
         # Point-in-Time Composite Velocity Score (PIT-CRMV Score at 09:30 AM)
         out['pit_score'] = (
-            0.40 * (out['gap_pct'] / 0.01) +
-            0.30 * (1.0 / (out['dist_sma20_abs'] + 0.01)) +
-            0.20 * out['has_catalyst'].astype(float) +
-            0.10 * out['vol_prev_ratio'].clip(lower=0, upper=3.0)
+            0.50 * (out['gap_pct'] / 0.01) +
+            0.35 * (1.0 / (out['dist_sma20_abs'] + 0.01)) +
+            0.15 * out['vol_prev_ratio'].clip(lower=0, upper=3.0)
         )
         
         return out

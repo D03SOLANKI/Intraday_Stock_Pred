@@ -15,23 +15,58 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 from strategy.dynamic_compounding_strategy import DynamicCompoundingStrategy
 
-CATALYST_SYMBOLS = [
-    'NIACL', 'GICRE', 'TATAINVEST', 'GVT&D', 'JSL', 'JINDALSTEL', 'BSE', 'IDEA', 'INDUSTOWER', 
-    'APARINDS', 'RVNL', 'BHEL', 'WAAREEENER', 'PATANJALI', 'AWL', 'DABUR', 'POLYCAB', 'THERMAX', 
-    'SUZLON', 'TATACOMM', 'VOLTAS', 'KPRMILL', 'POLICYBZR', 'SJVN', 'JUBLFOOD', 'HONAUT', 'GODREJIND'
-]
+# SEBI Official Large-Cap Exclusion Set (Top 100 Companies by Market Cap)
+# Under SEBI regulations, Large-Cap = Ranks 1-100; Mid-Cap = Ranks 101-250.
+# Any stock in Nifty 50 or Nifty 100 is strictly prohibited from the Mid-Cap strategy.
+LARGE_CAP_EXCLUSIONS = {
+    'RELIANCE', 'TCS', 'HDFCBANK', 'ICICIBANK', 'BHARTIARTL', 'SBIN', 'INFY', 'LICI', 'ITC', 'HINDUNILVR',
+    'LT', 'BAJFINANCE', 'HCLTECH', 'MARUTI', 'SUNPHARMA', 'ADANIENT', 'KOTAKBANK', 'TITAN', 'ONGC', 'TATAMOTORS',
+    'NTPC', 'AXISBANK', 'ADANIGREEN', 'ADANIPORTS', 'COALINDIA', 'POWERGRID', 'BAJAJFINSV', 'M&M', 'SIEMENS',
+    'HAL', 'ULTRACEMCO', 'IOC', 'DLF', 'ZOMATO', 'VBL', 'TRENT', 'BEL', 'INDIGO', 'JSWSTEEL', 'GRASIM',
+    'JINDALSTEL', 'INDUSTOWER', 'BHEL', 'DABUR', 'POLYCAB', 'VOLTAS', 'HONAUT', 'POLICYBZR', 'SUZLON', 'TATASTEEL',
+    'TECHM', 'WIPRO', 'EICHERMOT', 'NESTLEIND', 'DIVISLAB', 'BPCL', 'SHRIRAMFIN', 'HINDALCO', 'GAIL', 'VEDL'
+}
+
+def load_midcap_universe(csv_path: str = "nifty_midcap_150.csv") -> list:
+    """
+    Loads official Nifty Midcap 150 universe and strictly purges any Large-Cap stocks.
+    """
+    if not os.path.exists(csv_path):
+        csv_path = os.path.join(os.path.dirname(__file__), "nifty_midcap_150.csv")
+    
+    if not os.path.exists(csv_path):
+        raise FileNotFoundError(f"CRITICAL SYSTEM FAILURE: Official Mid-Cap universe file {csv_path} not found.")
+        
+    df = pd.read_csv(csv_path)
+    raw_symbols = df['Symbol'].dropna().unique().tolist()
+    
+    # Filter out Large-Caps
+    midcap_symbols = []
+    for s in raw_symbols:
+        s_clean = s.strip().upper()
+        if s_clean in LARGE_CAP_EXCLUSIONS:
+            continue
+        midcap_symbols.append(s_clean)
+        
+    return midcap_symbols
 
 def fetch_live_market_candidates(symbols: list = None) -> pd.DataFrame:
     """
-    Downloads live intraday 15m and daily historical bars for midcap universe.
+    Downloads live intraday 15m and daily historical bars for official midcap universe.
+    Strictly verifies zero Large-Cap contamination.
     """
     import yfinance as yf
     
     if symbols is None:
-        symbols = CATALYST_SYMBOLS
+        symbols = load_midcap_universe()
+    else:
+        # Validate that no Large-Caps are present in provided symbols
+        for s in symbols:
+            if s.upper() in LARGE_CAP_EXCLUSIONS:
+                raise ValueError(f"SYSTEM FAILURE: Large-Cap stock [{s}] attempted entry into Mid-Cap strategy!")
         
     tickers = [f"{s}.NS" for s in symbols]
-    print(f"Downloading live daily & 15m data for {len(tickers)} mid-cap tickers from NSE...")
+    print(f"Downloading live daily & 15m data for {len(tickers)} verified MID-CAP tickers from NSE...")
     
     try:
         daily_data = yf.download(tickers, period="2mo", interval="1d", progress=False)
@@ -143,12 +178,26 @@ def run_scanner(trading_date: str = None, active_equity: float = 10_000_000.0, d
         day_df = df_feat[df_feat['date'] == target_date].copy()
         eligible = day_df[day_df['pit_eligible']].sort_values(by='pit_score', ascending=False)
         
-    if len(eligible) == 0:
-        print("\n[INFO] Zero candidates met entry criteria. 100% Cash preserved.")
+    num_eligible = len(eligible)
+    MAX_ALLOWED_OPPORTUNITIES = getattr(strat, 'max_allowed_candidates', 2)
+    
+    if num_eligible == 0:
+        print("\n[INFO] Zero candidates met entry criteria. 100% Cash preserved (0 trades placed).")
         pd.DataFrame().to_csv("daily_live_scan_orders.csv", index=False)
         return pd.DataFrame()
         
-    top_candidates = eligible.head(strat.max_concurrent_positions).copy()
+    if num_eligible > MAX_ALLOWED_OPPORTUNITIES:
+        print("\n" + "!" * 80)
+        print(f"[REJECTED - SELECTIVITY VIOLATION] {num_eligible} valid opportunities found!")
+        print(f"Strategy strictly permits only 0, 1, or 2 valid trades. Found {num_eligible} (> {MAX_ALLOWED_OPPORTUNITIES}).")
+        print("Market is experiencing diffuse, broad-based momentum rather than an isolated top gainer.")
+        print("RULE ENFORCED: Day is completely rejected. ZERO orders placed. 100% Cash preserved.")
+        print("!" * 80)
+        pd.DataFrame().to_csv("daily_live_scan_orders.csv", index=False)
+        return pd.DataFrame()
+        
+    # Exactly 1 or 2 candidates qualify:
+    top_candidates = eligible.copy()
     
     orders = []
     print("\n" + "-" * 80)

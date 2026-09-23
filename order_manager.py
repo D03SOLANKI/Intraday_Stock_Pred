@@ -18,6 +18,7 @@ class OrderManager:
     def __init__(self, orders_csv: str = "daily_live_scan_orders.csv"):
         self.orders_csv = orders_csv
         self.strategy = DynamicCompoundingStrategy()
+        self.portfolio_profit_target_inr = getattr(self.strategy, 'portfolio_take_profit_inr', 100_000.0)
         self.positions = []
         self.load_orders()
 
@@ -68,9 +69,47 @@ class OrderManager:
                     pos['exit_reason'] = 'TAKE PROFIT HIT'
                     print(f"[{symbol}] EXIT: TAKE PROFIT at Rs. {pos['exit_price']:,.2f}")
 
-    def square_off_at_eod(self, market_prices: dict):
+    def process_portfolio_ticks(self, live_prices: dict) -> bool:
+        """
+        Updates live ticks, evaluates individual stops/targets, and checks
+        the mandatory Portfolio-Level Profit Target (Rs. 1,00,000).
+        Returns True if portfolio target was hit and all positions squared off.
+        """
+        open_positions = [p for p in self.positions if p['status'] == 'OPEN']
+        if not open_positions:
+            return False
+            
+        # 1. Update individual positions first
+        for pos in open_positions:
+            sym = pos['symbol']
+            if sym in live_prices:
+                self.process_tick(sym, live_prices[sym])
+                
+        # 2. Check Portfolio-Level Take-Profit Target across active positions
+        still_open = [p for p in self.positions if p['status'] == 'OPEN']
+        if not still_open:
+            return False
+            
+        total_unrealized_pnl = 0.0
+        for p in still_open:
+            sym = p['symbol']
+            current_px = live_prices.get(sym, p['entry_price'])
+            unrealized = (current_px - p['entry_price']) * p['shares']
+            total_unrealized_pnl += unrealized
+            
+        if total_unrealized_pnl >= self.portfolio_profit_target_inr:
+            print("\n" + "=" * 80)
+            print(f"[PORTFOLIO PROFIT TARGET HIT] Total P&L: Rs. {total_unrealized_pnl:,.2f} >= Target Rs. {self.portfolio_profit_target_inr:,.2f}!")
+            print("EXECUTING MANDATORY PORTFOLIO PROFIT LOCK: SQUARING OFF ALL POSITIONS IMMEDIATELY!")
+            print("=" * 80)
+            self.square_off_at_eod(live_prices, reason="PORTFOLIO PROFIT TARGET HIT (+Rs. 1,00,000)")
+            return True
+            
+        return False
+
+    def square_off_at_eod(self, market_prices: dict, reason: str = "INTRADAY SQUARE OFF (15:15 IST)"):
         print("\n" + "=" * 80)
-        print("15:15 IST MANDATORY INTRADAY SQUARE-OFF EXECUTION")
+        print(f"EXECUTION: {reason}")
         print("=" * 80)
         closed_trades = []
         
@@ -80,8 +119,8 @@ class OrderManager:
                 mkt_px = market_prices.get(sym, pos['entry_price'])
                 pos['status'] = 'CLOSED'
                 pos['exit_price'] = mkt_px * (1.0 - self.strategy.exit_slippage_pct)
-                pos['exit_reason'] = 'INTRADAY SQUARE OFF (15:15 IST)'
-                print(f"[{sym}] Intraday Auto-Square-Off at Rs. {pos['exit_price']:,.2f}")
+                pos['exit_reason'] = reason
+                print(f"[{sym}] Position Closed at Rs. {pos['exit_price']:,.2f} ({reason})")
                 
             # Reconcile PnL
             buy_val = pos['shares'] * pos['entry_price']

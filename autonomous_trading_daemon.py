@@ -156,7 +156,35 @@ def run_daemon():
                     logger.info("Mid-day boot/restart detected. Recovering active positions into Order Manager...")
                     order_mgr = OrderManager()
                     
-                logger.info(f"Intraday heartbeat [{curr_time.strftime('%H:%M:%S')} IST]: Tracking {len(order_mgr.positions)} positions with Breakeven Ratchet.")
+                open_positions = [p for p in order_mgr.positions if p['status'] == 'OPEN']
+                if not open_positions:
+                    logger.info(f"Intraday heartbeat [{curr_time.strftime('%H:%M:%S')} IST]: All positions closed/flat. Standing by.")
+                    time.sleep(30)
+                    continue
+                    
+                # Poll real-time market prices for active open positions
+                try:
+                    import yfinance as yf
+                    symbols_ns = [f"{p['symbol']}.NS" for p in open_positions]
+                    yf_data = yf.download(symbols_ns, period="1d", interval="1m", progress=False)
+                    live_px = {}
+                    if not yf_data.empty and 'Close' in yf_data:
+                        if isinstance(yf_data['Close'], pd.DataFrame):
+                            for p in open_positions:
+                                t = f"{p['symbol']}.NS"
+                                if t in yf_data['Close'] and not pd.isna(yf_data['Close'][t].iloc[-1]):
+                                    live_px[p['symbol']] = float(yf_data['Close'][t].iloc[-1])
+                        elif isinstance(yf_data['Close'], pd.Series):
+                            live_px[open_positions[0]['symbol']] = float(yf_data['Close'].iloc[-1])
+                            
+                    if live_px:
+                        target_hit = order_mgr.process_portfolio_ticks(live_px)
+                        if target_hit:
+                            logger.info("Portfolio profit target triggered and all positions locked in profit!")
+                except Exception as tick_err:
+                    logger.warning(f"Live tick polling error: {tick_err}")
+                    
+                logger.info(f"Intraday heartbeat [{curr_time.strftime('%H:%M:%S')} IST]: Tracking {len([p for p in order_mgr.positions if p['status'] == 'OPEN'])} active positions.")
                 time.sleep(30)
                 continue
 
@@ -166,8 +194,29 @@ def run_daemon():
                 if order_mgr is None:
                     order_mgr = OrderManager()
                 try:
-                    market_px = {p['symbol']: p['entry_price'] for p in order_mgr.positions}
-                    summary_df = order_mgr.square_off_at_eod(market_px)
+                    # Download REAL market prices for fair square-off
+                    open_positions = [p for p in order_mgr.positions if p['status'] == 'OPEN']
+                    real_mkt_px = {}
+                    if open_positions:
+                        try:
+                            import yfinance as yf
+                            symbols_ns = [f"{p['symbol']}.NS" for p in open_positions]
+                            yf_data = yf.download(symbols_ns, period="1d", interval="5m", progress=False)
+                            if not yf_data.empty and 'Close' in yf_data:
+                                if isinstance(yf_data['Close'], pd.DataFrame):
+                                    for p in open_positions:
+                                        t = f"{p['symbol']}.NS"
+                                        if t in yf_data['Close'] and not pd.isna(yf_data['Close'][t].iloc[-1]):
+                                            real_mkt_px[p['symbol']] = float(yf_data['Close'][t].iloc[-1])
+                                elif isinstance(yf_data['Close'], pd.Series):
+                                    real_mkt_px[open_positions[0]['symbol']] = float(yf_data['Close'].iloc[-1])
+                        except Exception:
+                            pass
+                    for p in open_positions:
+                        if p['symbol'] not in real_mkt_px:
+                            real_mkt_px[p['symbol']] = p['entry_price']
+                            
+                    summary_df = order_mgr.square_off_at_eod(real_mkt_px, reason="INTRADAY SQUARE OFF (15:15 IST)")
                     state["square_off_done"] = True
                     save_state(state)
                     logger.info("Square-off execution completed.")
