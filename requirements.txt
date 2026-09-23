@@ -8,3 +8,4 @@ psutil>=5.9.0
 requests>=2.31.0
 tabulate>=0.9.0
 yfinance>=0.2.38
+lightgbm>=4.3.0

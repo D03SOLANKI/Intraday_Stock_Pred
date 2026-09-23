@@ -25,3 +25,7 @@ ENV/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Large intermediate ML training caches
+ml/*.pkl
+scratch/

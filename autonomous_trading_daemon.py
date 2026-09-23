@@ -43,7 +43,7 @@ def acquire_single_instance_lock():
 
 acquire_single_instance_lock()
 
-from strategy.dynamic_compounding_strategy import DynamicCompoundingStrategy
+from strategy.ml_top3_gainer_strategy import MLTop3GainerStrategy
 from live_scanner import run_scanner
 from order_manager import OrderManager
 
@@ -138,9 +138,9 @@ def run_daemon():
                 
             # 4. Opening Trigger (09:30 AM IST)
             if curr_time >= time_0930 and not state.get("scanner_run"):
-                logger.info(">>> 09:30 AM: EXECUTING POINT-IN-TIME MID-CAP SCANNER <<<")
+                logger.info(">>> 09:30 AM: EXECUTING ML TOP-3 MID-CAP SCANNER <<<")
                 try:
-                    orders_df = run_scanner(trading_date=None, active_equity=10_000_000.0)
+                    orders_df = run_scanner(trading_date=None, active_equity=10_000_000.0, engine="ml_top3")
                     state["scanner_run"] = True
                     save_state(state)
                     logger.info(f"Scanner completed. {len(orders_df) if orders_df is not None else 0} actionable orders generated.")
@@ -178,9 +178,9 @@ def run_daemon():
                             live_px[open_positions[0]['symbol']] = float(yf_data['Close'].iloc[-1])
                             
                     if live_px:
-                        target_hit = order_mgr.process_portfolio_ticks(live_px)
-                        if target_hit:
-                            logger.info("Portfolio profit target triggered and all positions locked in profit!")
+                        closed_positions = order_mgr.process_portfolio_ticks(live_px)
+                        if closed_positions:
+                            logger.info(f"{len(closed_positions)} position(s) exited: {[c['symbol'] for c in closed_positions]}")
                 except Exception as tick_err:
                     logger.warning(f"Live tick polling error: {tick_err}")
                     

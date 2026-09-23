@@ -1,11 +1,22 @@
-name: Autonomous Intraday Trading Trigger
+name: Autonomous Cloud Paper Trading Engine (Option 3 ML Top-3)
 
 on:
   schedule:
-    # 04:00 UTC corresponds to 09:30 AM IST (Monday to Friday)
+    # 04:00 UTC = 09:30 AM IST (Monday to Friday): Morning Scan & Paper Orders Dispatch
     - cron: '0 4 * * 1-5'
+    # 09:45 UTC = 15:15 PM IST (Monday to Friday): EOD Intraday Square-Off & Paper Settlement
+    - cron: '45 9 * * 1-5'
   workflow_dispatch:
     inputs:
+      action:
+        description: 'Action to execute'
+        required: true
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - morning_scan
+          - eod_settlement
       active_equity:
         description: 'Active Portfolio Equity (INR)'
         required: false
@@ -15,8 +26,8 @@ permissions:
   contents: write
 
 jobs:
-  execute-scanner:
-    name: 09:30 AM Point-in-Time Scan & Order Dispatch
+  cloud-paper-trading:
+    name: Cloud Paper Trading Trigger (Laptop Independent)
     runs-on: ubuntu-latest
 
     steps:
@@ -36,22 +47,39 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Execute 09:30 AM Point-in-Time Scanner
+      - name: Determine Action & Execute
         run: |
+          ACTION="${{ github.event.inputs.action }}"
           EQUITY="${{ github.event.inputs.active_equity }}"
           if [ -z "$EQUITY" ]; then
             EQUITY="10000000.0"
           fi
-          echo "Executing scanner with equity: Rs. $EQUITY"
-          python live_scanner.py --equity $EQUITY --live
+          
+          UTC_HOUR=$(date -u +%H)
+          echo "Current UTC Hour: $UTC_HOUR | Requested Action: $ACTION"
 
-      - name: Publish Actionable Orders to Job Summary
+          if [ "$ACTION" = "morning_scan" ] || { [ "$ACTION" = "auto" ] && [ "$UTC_HOUR" -lt 7 ]; }; then
+            echo "=========================================================="
+            echo "EXECUTING 09:30 AM OPTION 3 ML TOP-3 SCANNER IN CLOUD"
+            echo "=========================================================="
+            python live_scanner.py --engine ml_top3 --equity $EQUITY
+          elif [ "$ACTION" = "eod_settlement" ] || { [ "$ACTION" = "auto" ] && [ "$UTC_HOUR" -ge 7 ]; }; then
+            echo "=========================================================="
+            echo "EXECUTING 15:15 PM CLOUD EOD SQUARE-OFF & PAPER SETTLEMENT"
+            echo "=========================================================="
+            python cloud_paper_eod_settlement.py
+          else
+            echo "Running default Option 3 ML Top-3 Scanner..."
+            python live_scanner.py --engine ml_top3 --equity $EQUITY
+          fi
+
+      - name: Publish Paper Portfolio Summary to GitHub Step Summary
         run: |
-          echo "## 🚀 09:30 AM Point-in-Time Trading Orders Generated" >> $GITHUB_STEP_SUMMARY
+          echo "## 🚀 Option 3 Cloud Paper Trading Execution" >> $GITHUB_STEP_SUMMARY
           echo "**Execution Time:** $(date -u) (UTC)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f "daily_live_scan_orders.csv" ]; then
-            echo "### 📊 Actionable Order Ledger (Tier 4 Dynamic Compounding)" >> $GITHUB_STEP_SUMMARY
+            echo "### 📊 Active Paper Order Ledger" >> $GITHUB_STEP_SUMMARY
             python -c "
           import pandas as pd
           try:
@@ -60,18 +88,27 @@ jobs:
           except Exception as e:
               print('Error formatting markdown:', e)
           " >> $GITHUB_STEP_SUMMARY
-          else
-            echo "⚠️ No orders file generated." >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f "daily_trade_execution_summary.csv" ]; then
+            echo "### 📋 Closed Trade Execution Summary" >> $GITHUB_STEP_SUMMARY
+            python -c "
+          import pandas as pd
+          try:
+              df = pd.read_csv('daily_trade_execution_summary.csv')
+              print(df.to_markdown(index=False))
+          except Exception as e:
+              print('Error formatting markdown:', e)
+          " >> $GITHUB_STEP_SUMMARY
           fi
 
-      - name: Commit and Push Updated Orders to Cloud
+      - name: Commit and Push Updated Paper State to Streamlit Cloud
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add daily_live_scan_orders.csv logs/ || true
+          git add daily_live_scan_orders.csv paper_trading_state.json daily_trade_execution_summary.csv paper_trades_history.csv logs/ || true
           if git diff --staged --quiet; then
-            echo "No new order changes to commit."
+            echo "No new paper trading changes to commit."
           else
-            git commit -m "Automated Daily 09:30 AM Orders Update [skip ci]"
+            git commit -m "Automated Cloud Paper Trading Sync [skip ci]"
             git push origin main
           fi

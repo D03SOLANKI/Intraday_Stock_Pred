@@ -1,0 +1,26 @@
+{
+  "features": [
+    "ret_1d",
+    "ret_3d",
+    "ret_5d",
+    "ret_10d",
+    "ret_20d",
+    "dist_sma20_feat",
+    "dist_sma50_feat",
+    "sma20_trend",
+    "true_range_pct",
+    "atr_5d",
+    "atr_20d",
+    "compression_ratio",
+    "vol_surge_t",
+    "vol_accel_feat",
+    "adv_20d_cr",
+    "range_position",
+    "stock_vs_sector",
+    "dist_52w_high",
+    "rsi_prev"
+  ],
+  "train_cutoff": "2025-01-01",
+  "total_train_samples": 99238,
+  "total_train_dates": 762
+}

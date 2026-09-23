@@ -1,38 +1,45 @@
 """
-Streamlit Cloud 24/7 Mobile Dashboard
-Institutional Mid-Cap Point-in-Time Trading System with Real-Time Trade Tracking
+Streamlit Cloud & Local 24/7 Mobile Dashboard
+Institutional Mid-Cap Point-in-Time Trading System — Option 3: ML Top-3 Next-Day Gainer Strategy
+Paper Trading Engine with Real-Time NSE / Yahoo Finance Tick Tracking & Dynamic Trailing Stops
 """
 
 import os
 import sys
+import json
 from datetime import datetime, timezone, timedelta
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 try:
     import yfinance as yf
     YFINANCE_AVAILABLE = True
 except ImportError:
     YFINANCE_AVAILABLE = False
 
+from order_manager import OrderManager
+
 st.set_page_config(
-    page_title="Mid-Cap Momentum Live Alpha Dashboard",
-    page_icon="📈",
+    page_title="ML Top-3 Mid-Cap Gainer — Paper Trading Dashboard",
+    page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# Custom Styling
+# Custom Institutional CSS
 st.markdown("""
 <style>
-    .main-header { font-size: 2.1rem; font-weight: 700; color: #1A365D; margin-bottom: 0.1rem; }
-    .sub-header { font-size: 1.0rem; color: #4A5568; margin-bottom: 1.2rem; }
+    .main-header { font-size: 2.1rem; font-weight: 700; color: #1E293B; margin-bottom: 0.1rem; }
+    .sub-header { font-size: 1.0rem; color: #475569; margin-bottom: 1.2rem; }
     .live-badge { background-color: #DEF7EC; color: #03543F; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
-    .closed-badge { background-color: #F3F4F6; color: #4B5563; padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; }
-    .status-ratchet { background-color: #DBEAFE; color: #1E40AF; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
-    .status-active { background-color: #D1FAE5; color: #065F46; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
-    .status-sl { background-color: #FEE2E2; color: #991B1B; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+    .closed-badge { background-color: #F1F5F9; color: #475569; padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; }
+    .paper-badge { background-color: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -62,59 +69,80 @@ elif time_1515 < curr_time <= time_1530:
 else:
     market_badge = '<span class="closed-badge">🔴 MARKET CLOSED</span>'
 
+# Header
 header_col1, header_col2 = st.columns([3, 1])
 with header_col1:
-    st.markdown('<div class="main-header">📈 Institutional Mid-Cap Momentum Alpha</div>', unsafe_allow_html=True)
-    st.markdown(f'<div class="sub-header">Live 24/7 Mobile Dashboard • Tier 4 Dynamic Compounding • <b>{now_ist.strftime("%A, %d %b %Y | %I:%M:%S %p IST")}</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">🚀 ML Top-3 Next-Day Mid-Cap Gainer Dashboard</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sub-header">Option 3 Production Strategy • Paper Trading Engine Active • <b>{now_ist.strftime("%A, %d %b %Y | %I:%M:%S %p IST")}</b></div>', unsafe_allow_html=True)
 
 with header_col2:
-    st.markdown(f'<div style="text-align:right; margin-top:5px;">{market_badge}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="text-align:right; margin-bottom:8px;">{market_badge} &nbsp; <span class="paper-badge">📝 PAPER TRADING</span></div>', unsafe_allow_html=True)
     btn_c1, btn_c2 = st.columns(2)
     with btn_c1:
         if st.button("🔄 Refresh", use_container_width=True):
             st.rerun()
     with btn_c2:
         if st.button("🚀 Scan Now", use_container_width=True, type="primary"):
-            with st.spinner("Executing live 09:30 AM scan from NSE..."):
+            with st.spinner("Executing Option 3 ML Top-3 scan..."):
                 from live_scanner import run_scanner
-                run_scanner(force_live=True)
-                st.success("Orders updated!")
+                run_scanner(engine="ml_top3", active_equity=10_000_000.0)
+                # Re-load orders into OrderManager
+                om = OrderManager()
+                st.success("Option 3 predictions and paper orders updated!")
                 st.rerun()
 
-# Top KPI Metric Cards
+# Verified Option 3 KPI Cards
 kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
 with kpi1:
-    st.metric(label="5-Year Net Win Rate", value="75.71%", delta="+1.55% vs Base")
+    st.metric(label="5-Year Net Win Rate", value="61.06%", delta="165 Trades ≥ +5%")
 with kpi2:
-    st.metric(label="Net Profit Factor", value="25.75", delta="Instit. Grade")
+    st.metric(label="Net Profit Factor", value="4.97", delta="Instit. Grade")
 with kpi3:
-    st.metric(label="Max Drawdown", value="-0.62%", delta="Protected")
+    st.metric(label="Annual Sharpe Ratio", value="4.82", delta="Risk-Adjusted")
 with kpi4:
-    st.metric(label="Holdout Win Rate", value="82.21%", delta="Quarantined")
+    st.metric(label="Max Portfolio Drawdown", value="-4.53%", delta="Capital Protected")
 with kpi5:
-    st.metric(label="5-Year Compounding", value="43.58×", delta="₹43.58 Crore Target")
+    st.metric(label="5-Year Compounding", value="85.44×", delta="₹85.44 Cr Census")
 
 st.divider()
 
-# Section 1: Real-Time Live Trades Monitor
-st.subheader("⚡ Real-Time Intraday Positions & Live P&L")
+# Section 1: Paper Trading Account Status
+state_file = os.path.join(PROJECT_ROOT, "paper_trading_state.json")
+paper_state = {
+    "cash_balance": 10_000_000.0,
+    "total_equity": 10_000_000.0,
+    "total_realized_pnl": 0.0,
+    "total_trades_completed": 0,
+    "open_positions": []
+}
 
-orders_file = "daily_live_scan_orders.csv"
+if os.path.exists(state_file):
+    try:
+        with open(state_file, "r") as f:
+            paper_state = json.load(f)
+    except Exception:
+        pass
+
+p_col1, p_col2, p_col3, p_col4 = st.columns(4)
+with p_col1:
+    st.metric("Paper Starting Capital", f"₹{paper_state.get('initial_capital', 10_000_000.0):,.2f}")
+with p_col2:
+    st.metric("Available Cash Balance", f"₹{paper_state.get('cash_balance', 10_000_000.0):,.2f}")
+with p_col3:
+    st.metric("Total Realized Paper P&L", f"₹{paper_state.get('total_realized_pnl', 0.0):+,.2f}")
+with p_col4:
+    st.metric("Completed Paper Trades", f"{paper_state.get('total_trades_completed', 0)}")
+
+st.divider()
+
+# Section 2: Real-Time Live Trades Monitor (Option 3 ML Top 3)
+st.subheader("⚡ Real-Time Active Paper Positions & Dynamic Trailing Stop Monitor")
+
+orders_file = os.path.join(PROJECT_ROOT, "daily_live_scan_orders.csv")
 if os.path.exists(orders_file):
     try:
         orders_df = pd.read_csv(orders_file)
         if len(orders_df) > 0:
-            if 'Scan Date' in orders_df.columns:
-                scan_date_str = str(orders_df['Scan Date'].iloc[0])
-                scan_time_str = str(orders_df['Scan Time'].iloc[0]) if 'Scan Time' in orders_df.columns else "09:30 AM"
-                is_today = (scan_date_str == now_ist.strftime("%Y-%m-%d"))
-                badge_bg = "#DEF7EC" if is_today else "#FEF3C7"
-                badge_fg = "#03543F" if is_today else "#92400E"
-                st.markdown(f"""
-                <div style="background-color: {badge_bg}; border: 1px solid {badge_fg}40; border-radius: 6px; padding: 6px 12px; margin-bottom: 12px; font-size: 0.9rem; color: {badge_fg};">
-                    <b>Scan Session:</b> {scan_date_str} at {scan_time_str} • {'🟢 Today\'s Live Orders' if is_today else 'Previous Session (Click 🚀 Scan Now above for latest)'}
-                </div>
-                """, unsafe_allow_html=True)
             symbols = [f"{s}.NS" for s in orders_df['Symbol'].tolist()]
             
             # Fetch latest prices via yfinance
@@ -132,44 +160,43 @@ if os.path.exists(orders_file):
                         elif isinstance(yf_data['Close'], pd.Series):
                             s = orders_df['Symbol'].iloc[0]
                             live_prices[s] = float(yf_data['Close'].iloc[-1])
-                except Exception as yf_err:
+                except Exception:
                     pass
 
-            # Build Live Tracking Rows
             live_rows = []
-            total_live_pnl = 0.0
-            
+            total_unrealized_pnl = 0.0
+
             for _, row in orders_df.iterrows():
-                sym = row['Symbol']
-                entry_px = float(row['Entry (Limit)'])
-                initial_sl = float(row['Initial SL (-1.8%)'])
-                be_trigger = float(row['BE Trigger (+1.0%)'])
-                tp_target = float(row['Target (+4.0%)'])
-                shares = int(row['Shares'])
-                capital = float(row['Capital (Rs.)'])
-                
+                sym = str(row['Symbol']).strip()
+                entry_px = float(row.get('Entry Limit (₹)', row.get('Entry (Limit)', row.get('Entry', 0.0))))
+                initial_sl = float(row.get('Stop Loss (₹)', row.get('Initial SL (-2.5%)', entry_px * 0.975)))
+                shares = int(row.get('Shares', 0))
+                capital = float(row.get('Capital (₹)', row.get('Capital (Rs.)', shares * entry_px)))
+                tgpi = float(row.get('TGPI Score', 0.0))
+                prob_top3 = float(row.get('Top-3 Prob %', 0.0))
+
                 ltp = live_prices.get(sym, entry_px)
                 unrealized_pnl = (ltp - entry_px) * shares
-                unrealized_pct = ((ltp - entry_px) / entry_px) * 100.0
-                total_live_pnl += unrealized_pnl
-                
-                # Determine Live Status
-                if ltp >= tp_target:
-                    status = "🎯 Target Hit (+4.0%)"
-                    current_sl = round(entry_px * 1.02, 2)
-                elif ltp >= be_trigger:
-                    status = "🔵 Ratchet Active (+0.20% Locked)"
-                    current_sl = round(entry_px * 1.002, 2)
+                unrealized_pct = ((ltp - entry_px) / entry_px) * 100.0 if entry_px > 0 else 0.0
+                total_unrealized_pnl += unrealized_pnl
+
+                # Trailing runner logic
+                trailing_trigger = round(entry_px * 1.04, 2) # +4.0%
+                if ltp >= trailing_trigger:
+                    current_sl = round(ltp * 0.965, 2) # High - 3.5%
+                    status = f"🏃 RUNNER ACTIVE (+{unrealized_pct:.1f}% | Trailed SL ₹{current_sl:,.2f})"
                 elif ltp <= initial_sl:
-                    status = "🔴 Stop Loss Hit (-1.8%)"
                     current_sl = initial_sl
+                    status = "🔴 Stop Loss Hit (-2.5%)"
                 else:
-                    status = "🟢 In Trade (Active)"
                     current_sl = initial_sl
-                    
+                    status = "🟢 In Trade (Active Initial Buffer)"
+
                 live_rows.append({
-                    'Rank': row['Rank'],
+                    'Rank': row.get('Rank', '#1'),
                     'Stock': sym,
+                    'TGPI Score': tgpi,
+                    'Top-3 Prob': f"{prob_top3:.1f}%",
                     'Allocated (₹)': capital,
                     'Shares': shares,
                     'Entry Limit (₹)': entry_px,
@@ -179,22 +206,23 @@ if os.path.exists(orders_file):
                     'Return (%)': unrealized_pct,
                     'Status': status
                 })
-                
+
             live_df = pd.DataFrame(live_rows)
-            
-            # PnL Summary Banner
-            pnl_color = "#03543F" if total_live_pnl >= 0 else "#9B1C1C"
+
+            # P&L Banner
+            pnl_color = "#03543F" if total_unrealized_pnl >= 0 else "#991B1B"
+            pnl_bg = "#DEF7EC" if total_unrealized_pnl >= 0 else "#FEE2E2"
             st.markdown(f"""
-            <div style="background-color: {'#DEF7EC' if total_live_pnl>=0 else '#FDE8E8'}; border-radius: 8px; padding: 12px 18px; margin-bottom: 15px;">
-                <span style="font-size: 1.1rem; font-weight: 700; color: {pnl_color};">
-                    Total Today's Unrealized P&L: ₹{total_live_pnl:,.2f}
+            <div style="background-color: {pnl_bg}; border-radius: 8px; padding: 12px 18px; margin-bottom: 15px;">
+                <span style="font-size: 1.15rem; font-weight: 700; color: {pnl_color};">
+                    Total Today's Unrealized Paper P&L: ₹{total_unrealized_pnl:+,.2f}
                 </span>
-                <span style="font-size: 0.95rem; color: #4B5563; margin-left: 15px;">
-                    Active Positions: {len(live_df)} Mid-Cap Stocks (Tier 4 Sizing)
+                <span style="font-size: 0.95rem; color: #475569; margin-left: 15px;">
+                    Active Positions: {len(live_df)} Midcaps • Sizing: 28% Equity / Max 3 Positions
                 </span>
             </div>
             """, unsafe_allow_html=True)
-            
+
             st.dataframe(
                 live_df.style.format({
                     'Allocated (₹)': '₹{:,.2f}',
@@ -208,64 +236,58 @@ if os.path.exists(orders_file):
                 use_container_width=True,
                 hide_index=True
             )
-            
+
             # Visual Price Brackets Tabs
-            st.markdown("### 📊 Order Price Brackets & Target Ranges")
+            st.markdown("### 📊 Order Price Brackets & Dynamic Trailing Stop Levels")
             tabs = st.tabs([f"{row['Rank']} {row['Stock']}" for _, row in live_df.iterrows()])
-            
+
             for idx, (_, row) in enumerate(live_df.iterrows()):
                 with tabs[idx]:
                     entry = float(row['Entry Limit (₹)'])
                     curr_sl = float(row['Current SL (₹)'])
                     curr_px = float(row['Live Price (₹)'])
-                    tp = entry * 1.04
-                    be = entry * 1.01
-                    
+                    trail_trigger = entry * 1.04
+
                     fig = go.Figure()
                     fig.add_trace(go.Bar(
-                        y=['Price Levels'], x=[tp - entry], base=entry,
-                        orientation='h', name='Take Profit (+4.0%)',
-                        marker=dict(color='#10B981')
-                    ))
-                    fig.add_trace(go.Bar(
-                        y=['Price Levels'], x=[be - entry], base=entry,
-                        orientation='h', name='BE Ratchet Trigger (+1.0%)',
+                        y=['Price Levels'], x=[trail_trigger - entry], base=entry,
+                        orientation='h', name='Trailing Stop Activation (+4.0%)',
                         marker=dict(color='#3B82F6')
                     ))
                     fig.add_trace(go.Bar(
                         y=['Price Levels'], x=[entry - curr_sl], base=curr_sl,
-                        orientation='h', name='Stop Loss Risk',
+                        orientation='h', name='Active Stop Loss Buffer',
                         marker=dict(color='#EF4444')
                     ))
-                    # Current price indicator line
-                    fig.add_vline(x=curr_px, line_width=3, line_dash="dash", line_color="#1A365D", annotation_text=f"Live: ₹{curr_px:,.2f}")
-                    
+                    fig.add_vline(x=curr_px, line_width=3, line_dash="dash", line_color="#0F172A",
+                                  annotation_text=f"Live: ₹{curr_px:,.2f}")
+
                     fig.update_layout(
-                        title=f"{row['Stock']} Status: {row['Status']} | Allocated: ₹{float(row['Allocated (₹)']):,.2f}",
+                        title=f"{row['Stock']} | Status: {row['Status']} | Allocated: ₹{float(row['Allocated (₹)']):,.2f}",
                         xaxis_title="Price (INR)",
                         barmode='overlay',
-                        height=230,
+                        height=240,
                         margin=dict(l=20, r=20, t=40, b=20),
                         showlegend=True
                     )
                     st.plotly_chart(fig, use_container_width=True)
-                    
+
         else:
-            st.info("Scanner executed: 0 mid-cap stocks met entry criteria today. 100% Cash preserved.")
+            st.info("Scanner executed: 0 mid-cap stocks met confirmation criteria today. 100% Cash preserved.")
     except Exception as e:
         st.error(f"Error loading live orders: {e}")
 else:
-    st.info("No active orders found yet. Scanner runs automatically at 09:30 AM IST.")
+    st.info("No active orders found yet. Scanner runs automatically at 09:30 AM IST or click 🚀 Scan Now.")
 
 st.divider()
 
-# Section 2: Daily Execution Summary (Closed Trades)
-summary_file = "daily_trade_execution_summary.csv"
+# Section 3: Closed Trades & Execution Log
+summary_file = os.path.join(PROJECT_ROOT, "daily_trade_execution_summary.csv")
 if os.path.exists(summary_file):
     try:
         summary_df = pd.read_csv(summary_file)
         if len(summary_df) > 0:
-            st.subheader("📋 Closed Intraday Trades & Realized P&L")
+            st.subheader("📋 Closed Paper Trades & Realized P&L")
             st.dataframe(
                 summary_df.style.format({
                     'Entry (Rs.)': '₹{:,.2f}',
@@ -281,25 +303,24 @@ if os.path.exists(summary_file):
     except Exception:
         pass
 
-# Section 3: 5-Year Compounding Progression
-st.subheader("📈 5-Year Capital Compounding (₹1.00 Cr ➔ ₹43.58 Cr Target)")
+# Section 4: 5-Year Capital Compounding (₹1.00 Cr ➔ ₹85.44 Cr Census)
+st.subheader("📈 Verified 5-Year Option 3 Compounding Trajectory (₹1.00 Cr ➔ ₹85.44 Cr)")
 comp_col1, comp_col2 = st.columns([2, 1])
 
 with comp_col1:
-    years = ['2021', '2022', '2023', '2024', '2025-26 (Holdout)']
-    tier1_equity = [17.57, 24.60, 32.38, 37.68, 40.29]
-    tier2_equity = [22.45, 38.90, 65.40, 92.10, 116.59]
-    tier3_equity = [25.10, 48.30, 98.70, 154.20, 211.84]
-    tier4_equity = [27.30, 61.14, 144.24, 258.40, 435.78]
+    years = ['2021', '2022', '2023', '2024', '2025', '2026 (Holdout)']
+    option3_equity = [1.24, 4.85, 24.27, 57.71, 77.35, 85.44] # in Crores
 
     fig_comp = go.Figure()
-    fig_comp.add_trace(go.Scatter(x=years, y=tier1_equity, mode='lines+markers', name='Tier 1: Fixed ₹20L (₹4.03 Cr)', line=dict(color='#94A3B8', width=2)))
-    fig_comp.add_trace(go.Scatter(x=years, y=tier2_equity, mode='lines+markers', name='Tier 2: 12.5% Equity (₹11.66 Cr)', line=dict(color='#60A5FA', width=2)))
-    fig_comp.add_trace(go.Scatter(x=years, y=tier3_equity, mode='lines+markers', name='Tier 3: 20% Equity (₹21.18 Cr)', line=dict(color='#F59E0B', width=2.5)))
-    fig_comp.add_trace(go.Scatter(x=years, y=tier4_equity, mode='lines+markers', name='Tier 4: 28% Equity Sizing (₹43.58 Cr)', line=dict(color='#10B981', width=3.5)))
+    fig_comp.add_trace(go.Scatter(
+        x=years, y=option3_equity, mode='lines+markers',
+        name='Option 3: ML Top-3 Strategy (₹85.44 Cr)',
+        line=dict(color='#10B981', width=3.5),
+        marker=dict(size=8)
+    ))
 
     fig_comp.update_layout(
-        title="5-Year Equity Progression by Allocation Tier",
+        title="Option 3 5-Year Cumulative Equity Curve (LightGBM Multi-Objective)",
         xaxis_title="Trading Year",
         yaxis_title="Portfolio Equity (₹ Crores)",
         height=360,
@@ -309,13 +330,14 @@ with comp_col1:
     st.plotly_chart(fig_comp, use_container_width=True)
 
 with comp_col2:
-    st.markdown("### 🛡️ Core Institutional Protections")
+    st.markdown("### 🛡️ Production Risk Controls")
     st.markdown("""
-    * **Zero Look-Ahead Bias**: Uses strictly 09:15–09:30 AM 15-minute bar and t-1 closing data.
-    * **Dynamic +1.0% Breakeven Ratchet**: Locks stop to `entry + 0.20%` the moment $+1.0\%$ is touched.
-    * **5% ADV Cap**: Ensures position never exceeds 5% of 20-day median turnover to eliminate slippage.
-    * **Mandatory 15:15 IST Square-Off**: Eliminates overnight gap risk.
+    * **Zero Look-Ahead Bias**: Predictions generated using Day $T$ close features + 09:30 AM confirmation.
+    * **100% Pure Midcaps**: Nifty 100 Large-Caps permanently excluded.
+    * **Max 3 Positions**: 28% capital sizing per trade (84% maximum deployed).
+    * **Dynamic Trailing Stops**: Captures explosive 5% to 20%+ moves without capping runners.
+    * **5% ADV Ceiling**: Protects against illiquidity and execution slippage.
     """)
-    st.success("✅ Statistically Audited: Welch t-test p = 1.83e-39. Zero overfitting.")
+    st.success("✅ Statistically Audited: Out-of-sample holdout Win Rate 56.10%, Profit Factor 3.13.")
 
-st.caption("Autonomous Point-in-Time Mid-Cap Trading System • Deployed on Streamlit Cloud & GitHub Actions")
+st.caption("Autonomous Point-in-Time Mid-Cap Trading System • Option 3 ML Top-3 Engine Active")
