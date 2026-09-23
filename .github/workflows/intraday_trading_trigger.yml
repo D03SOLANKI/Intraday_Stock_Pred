@@ -43,7 +43,7 @@ jobs:
             EQUITY="10000000.0"
           fi
           echo "Executing scanner with equity: Rs. $EQUITY"
-          python live_scanner.py --equity $EQUITY
+          python live_scanner.py --equity $EQUITY --live
 
       - name: Publish Actionable Orders to Job Summary
         run: |

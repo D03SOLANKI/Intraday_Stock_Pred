@@ -5,7 +5,7 @@ Institutional Mid-Cap Point-in-Time Trading System with Real-Time Trade Tracking
 
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
@@ -37,23 +37,49 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Market Status Check (IST: UTC+5:30)
-now = datetime.now()
-curr_time = now.time()
-weekday = now.weekday()
-is_market_open = (weekday < 5) and (datetime.strptime("09:15", "%H:%M").time() <= curr_time <= datetime.strptime("15:30", "%H:%M").time())
+IST = timezone(timedelta(hours=5, minutes=30))
+now_ist = datetime.now(IST)
+curr_time = now_ist.time()
+weekday = now_ist.weekday()
+
+time_0915 = datetime.strptime("09:15", "%H:%M").time()
+time_0930 = datetime.strptime("09:30", "%H:%M").time()
+time_1515 = datetime.strptime("15:15", "%H:%M").time()
+time_1530 = datetime.strptime("15:30", "%H:%M").time()
+
+is_market_open = (weekday < 5) and (time_0915 <= curr_time <= time_1530)
+
+if weekday >= 5:
+    market_badge = '<span class="closed-badge">🔴 WEEKEND (MARKET CLOSED)</span>'
+elif curr_time < time_0915:
+    market_badge = '<span class="closed-badge">⏳ PRE-MARKET (Opens 09:15 IST)</span>'
+elif time_0915 <= curr_time < time_0930:
+    market_badge = '<span style="background-color: #FEF3C7; color: #92400E; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;">🟡 15M BAR FORMING (Scan at 09:30)</span>'
+elif time_0930 <= curr_time <= time_1515:
+    market_badge = '<span class="live-badge">🟢 LIVE MARKET ACTIVE</span>'
+elif time_1515 < curr_time <= time_1530:
+    market_badge = '<span style="background-color: #FED7AA; color: #9A3412; padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.85rem;">🟠 15:15 AUTO SQUARE-OFF DONE</span>'
+else:
+    market_badge = '<span class="closed-badge">🔴 MARKET CLOSED</span>'
 
 header_col1, header_col2 = st.columns([3, 1])
 with header_col1:
     st.markdown('<div class="main-header">📈 Institutional Mid-Cap Momentum Alpha</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Live 24/7 Mobile Dashboard • Tier 4 Dynamic Compounding • Zero Look-Ahead Bias</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="sub-header">Live 24/7 Mobile Dashboard • Tier 4 Dynamic Compounding • <b>{now_ist.strftime("%A, %d %b %Y | %I:%M:%S %p IST")}</b></div>', unsafe_allow_html=True)
 
 with header_col2:
-    if is_market_open:
-        st.markdown('<div style="text-align:right; margin-top:10px;"><span class="live-badge">🟢 LIVE MARKET ACTIVE</span></div>', unsafe_allow_html=True)
-    else:
-        st.markdown('<div style="text-align:right; margin-top:10px;"><span class="closed-badge">🔴 MARKET CLOSED</span></div>', unsafe_allow_html=True)
-    if st.button("🔄 Refresh Live Data", use_container_width=True):
-        st.rerun()
+    st.markdown(f'<div style="text-align:right; margin-top:5px;">{market_badge}</div>', unsafe_allow_html=True)
+    btn_c1, btn_c2 = st.columns(2)
+    with btn_c1:
+        if st.button("🔄 Refresh", use_container_width=True):
+            st.rerun()
+    with btn_c2:
+        if st.button("🚀 Scan Now", use_container_width=True, type="primary"):
+            with st.spinner("Executing live 09:30 AM scan from NSE..."):
+                from live_scanner import run_scanner
+                run_scanner(force_live=True)
+                st.success("Orders updated!")
+                st.rerun()
 
 # Top KPI Metric Cards
 kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
@@ -78,6 +104,17 @@ if os.path.exists(orders_file):
     try:
         orders_df = pd.read_csv(orders_file)
         if len(orders_df) > 0:
+            if 'Scan Date' in orders_df.columns:
+                scan_date_str = str(orders_df['Scan Date'].iloc[0])
+                scan_time_str = str(orders_df['Scan Time'].iloc[0]) if 'Scan Time' in orders_df.columns else "09:30 AM"
+                is_today = (scan_date_str == now_ist.strftime("%Y-%m-%d"))
+                badge_bg = "#DEF7EC" if is_today else "#FEF3C7"
+                badge_fg = "#03543F" if is_today else "#92400E"
+                st.markdown(f"""
+                <div style="background-color: {badge_bg}; border: 1px solid {badge_fg}40; border-radius: 6px; padding: 6px 12px; margin-bottom: 12px; font-size: 0.9rem; color: {badge_fg};">
+                    <b>Scan Session:</b> {scan_date_str} at {scan_time_str} • {'🟢 Today\'s Live Orders' if is_today else 'Previous Session (Click 🚀 Scan Now above for latest)'}
+                </div>
+                """, unsafe_allow_html=True)
             symbols = [f"{s}.NS" for s in orders_df['Symbol'].tolist()]
             
             # Fetch latest prices via yfinance
@@ -86,11 +123,15 @@ if os.path.exists(orders_file):
                 try:
                     yf_data = yf.download(symbols, period="1d", interval="5m", progress=False)
                     if not yf_data.empty and 'Close' in yf_data:
-                        last_closes = yf_data['Close'].iloc[-1]
-                        for s in orders_df['Symbol']:
-                            sym_ns = f"{s}.NS"
-                            if sym_ns in last_closes and not pd.isna(last_closes[sym_ns]):
-                                live_prices[s] = float(last_closes[sym_ns])
+                        if isinstance(yf_data['Close'], pd.DataFrame):
+                            last_closes = yf_data['Close'].iloc[-1]
+                            for s in orders_df['Symbol']:
+                                sym_ns = f"{s}.NS"
+                                if sym_ns in last_closes and not pd.isna(last_closes[sym_ns]):
+                                    live_prices[s] = float(last_closes[sym_ns])
+                        elif isinstance(yf_data['Close'], pd.Series):
+                            s = orders_df['Symbol'].iloc[0]
+                            live_prices[s] = float(yf_data['Close'].iloc[-1])
                 except Exception as yf_err:
                     pass
 
