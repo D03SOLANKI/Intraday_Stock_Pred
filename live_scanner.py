@@ -55,6 +55,71 @@ def load_midcap_universe(csv_path: str = "nifty_midcap_150.csv") -> list:
     return midcap_symbols
 
 
+def sync_live_market_data(raw_df: pd.DataFrame, symbols: list) -> pd.DataFrame:
+    """
+    Fetches the newest market days from Yahoo Finance for the midcap universe,
+    merging them with raw_df so that candidate predictions automatically shift
+    to the latest live market session.
+    """
+    try:
+        import yfinance as yf
+        tickers = [f"{s}.NS" for s in symbols if s not in NIFTY100_LARGE_CAP_EXCLUSIONS]
+        print(f"Checking for new market sessions via Yahoo Finance for {len(tickers)} midcaps...")
+        yf_data = yf.download(tickers, period="7d", interval="1d", progress=False)
+
+        if yf_data.empty or 'Close' not in yf_data:
+            return raw_df
+
+        closes = yf_data['Close']
+        opens = yf_data['Open']
+        highs = yf_data['High']
+        lows = yf_data['Low']
+        volumes = yf_data['Volume']
+
+        existing_dates = set(pd.to_datetime(raw_df['date']).dt.strftime('%Y-%m-%d').unique())
+        sector_map = raw_df.groupby('symbol')['sector'].last().to_dict()
+        new_rows = []
+
+        for d in closes.index:
+            d_str = d.strftime('%Y-%m-%d')
+            if d_str not in existing_dates:
+                for sym in symbols:
+                    t = f"{sym}.NS"
+                    if t in closes and not pd.isna(closes[t].loc[d]):
+                        c = float(closes[t].loc[d])
+                        o = float(opens[t].loc[d]) if t in opens and not pd.isna(opens[t].loc[d]) else c
+                        h = float(highs[t].loc[d]) if t in highs and not pd.isna(highs[t].loc[d]) else c
+                        l = float(lows[t].loc[d]) if t in lows and not pd.isna(lows[t].loc[d]) else c
+                        v = float(volumes[t].loc[d]) if t in volumes and not pd.isna(volumes[t].loc[d]) else 0.0
+
+                        new_rows.append({
+                            'date': pd.to_datetime(d_str),
+                            'symbol': sym,
+                            'company': sym,
+                            'sector': sector_map.get(sym, 'MidCap'),
+                            'open': o,
+                            'high': h,
+                            'low': l,
+                            'close': c,
+                            'volume': v
+                        })
+
+        if new_rows:
+            print(f"[LIVE SYNC] Appended {len(new_rows)} fresh stock-days across {len(set(r['date'] for r in new_rows))} new session(s).")
+            df_new = pd.DataFrame(new_rows)
+            combined = pd.concat([raw_df[['date', 'symbol', 'company', 'sector', 'open', 'high', 'low', 'close', 'volume']], df_new], ignore_index=True)
+            combined = combined.sort_values(['symbol', 'date']).reset_index(drop=True)
+            combined['prev_close'] = combined.groupby('symbol')['close'].shift(1)
+            combined['daily_return'] = (combined['close'] - combined['prev_close']) / (combined['prev_close'] + 1e-6) * 100.0
+            combined['gap_pct'] = (combined['open'] - combined['prev_close']) / (combined['prev_close'] + 1e-6) * 100.0
+            return combined
+
+    except Exception as e:
+        print(f"[WARNING] Live market data sync error (falling back to baseline): {e}")
+
+    return raw_df
+
+
 def run_scanner(
     trading_date: str = None,
     active_equity: float = 10_000_000.0,
@@ -78,6 +143,10 @@ def run_scanner(
         raw_df = pd.read_pickle(data_path)
         raw_df['date'] = pd.to_datetime(raw_df['date'])
         raw_df = raw_df.sort_values(['symbol', 'date']).reset_index(drop=True)
+
+        # Automatically synchronize with live market sessions
+        universe_symbols = load_midcap_universe()
+        raw_df = sync_live_market_data(raw_df, universe_symbols)
 
         feat_df = strat.compute_features(raw_df)
         all_dates = sorted(feat_df['date'].unique())

@@ -137,6 +137,21 @@ class MLTop3GainerStrategy:
         range_span = df['high'] - df['low']
         df['range_position'] = np.where(range_span > 0, (df['close'] - df['low']) / range_span, 0.5)
 
+        # 7. 52-Week High Proximity
+        df['high_52w'] = grouped['high'].transform(lambda x: x.rolling(252, min_periods=20).max())
+        df['dist_52w_high'] = (df['close'] - df['high_52w']) / (df['high_52w'] + 1e-6) * 100.0
+
+        # 8. RSI Indicator (14 period)
+        def calc_rsi(series, period=14):
+            delta = series.diff()
+            gain = (delta.where(delta > 0, 0)).rolling(period).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(period).mean()
+            rs = gain / (loss + 1e-6)
+            return 100.0 - (100.0 / (1.0 + rs))
+
+        if 'rsi_prev' not in df.columns or df['rsi_prev'].isna().any():
+            df['rsi_prev'] = grouped['close'].transform(lambda x: calc_rsi(x, 14)).fillna(50.0)
+
         if 'sector' in df.columns:
             sector_mean = df.groupby(['sector', 'date'])['daily_return'].transform('mean')
             df['stock_vs_sector'] = df['daily_return'] - sector_mean
