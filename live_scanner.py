@@ -172,9 +172,40 @@ def run_scanner(
         print("ACTIONABLE 09:30 AM BUY ORDERS — PREDICTED TOP MID-CAP GAINERS")
         print("─" * 85)
 
+        # Fetch actual live 1-minute market tick (LTP) at the exact moment of execution
+        candidate_symbols = top3_cands['symbol'].tolist()
+        live_ticks = {}
+        try:
+            import yfinance as yf
+            cands_tickers = [f"{s}.NS" for s in candidate_symbols]
+            tick_data = yf.download(cands_tickers, period="1d", interval="1m", progress=False)
+            if not tick_data.empty and 'Close' in tick_data:
+                if isinstance(tick_data['Close'], pd.DataFrame):
+                    for s in candidate_symbols:
+                        t = f"{s}.NS"
+                        if t in tick_data['Close']:
+                            c_series = tick_data['Close'][t].dropna()
+                            if not c_series.empty:
+                                live_ticks[s] = float(c_series.iloc[-1])
+                elif isinstance(tick_data['Close'], pd.Series):
+                    s = candidate_symbols[0]
+                    c_series = tick_data['Close'].dropna()
+                    if not c_series.empty:
+                        live_ticks[s] = float(c_series.iloc[-1])
+        except Exception as tick_err:
+            print(f"[WARNING] Could not fetch real-time 1m tick for candidates: {tick_err}")
+
         for rank_idx, (_, row) in enumerate(top3_cands.iterrows(), 1):
             sym = row['symbol']
-            curr_px = row.get('close', row.get('prev_close', 0))
+            # ALWAYS prioritize the actual real-time execution price at this exact second
+            actual_live_px = live_ticks.get(sym)
+            if actual_live_px and actual_live_px > 0:
+                curr_px = actual_live_px
+                print(f"[{sym}] Using Actual Live Execution Tick: Rs. {curr_px:,.2f}")
+            else:
+                curr_px = row.get('open', row.get('close', row.get('prev_close', 0)))
+                print(f"[{sym}] Live tick unavailable, falling back to candle price: Rs. {curr_px:,.2f}")
+
             entry_price = curr_px * (1.0 + strat.entry_slippage_pct)
             initial_sl = entry_price * (1.0 - strat.initial_sl_pct)
             adv_inr = row.get('adv_20d_cr', 5.0) * 10_000_000.0

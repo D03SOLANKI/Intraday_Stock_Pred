@@ -1,37 +1,10 @@
 {
   "initial_capital": 10000000.0,
-  "cash_balance": 6927877.228800045,
+  "cash_balance": 9645583.414572664,
   "total_equity": 10000000.0,
-  "total_realized_pnl": -275570.6511999544,
-  "total_trades_completed": 2,
+  "total_realized_pnl": -353093.3754273357,
+  "total_trades_completed": 3,
   "open_positions": [
-    {
-      "rank": "#2",
-      "symbol": "APARINDS",
-      "entry_date": "2026-09-24",
-      "entry_time": "00:16:17",
-      "entry_price": 18269.47,
-      "shares": 153,
-      "allocated_capital": 2795228.3,
-      "initial_sl": 17812.73,
-      "current_sl": 17812.73,
-      "trailing_trigger": 19000.25,
-      "highest_price_seen": 18269.47,
-      "is_trailing_active": false,
-      "tgpi_score": 2.446,
-      "top3_prob": 60.2,
-      "status": "OPEN",
-      "exit_price": null,
-      "exit_time": null,
-      "exit_reason": null,
-      "trade_logic": "APARINDS ranked #2 in the pure Mid-Cap universe with a TGPI score of 2.446 and an estimated 60.2% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by moderate accumulation (1.60x 20-DMA volume) and weak close (23% of session range). With a 20-DMA distance of +3.5% and sector alpha of -2.78%, the stock exhibits strong institutional continuation momentum.",
-      "key_drivers": "**Volume Surge:** 1.60x 20-DMA volume (Moderate Accumulation) \u2022 **Range Placement:** Closed at 23% of daily range (Weak Close) \u2022 **Sector Relative Strength:** -2.78% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** +3.5% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.45 (Active Volatility Expansion) \u2022 **RSI Momentum:** 61.7 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
-      "volume_surge": "1.60x",
-      "range_position": "23%",
-      "sector_alpha": "-2.78%",
-      "dist_20dma": "+3.5%",
-      "rsi": "61.7"
-    },
     {
       "rank": "#3",
       "symbol": "PATANJALI",
@@ -97,7 +70,7 @@
       "initial_sl": 1455.56,
       "current_sl": 1455.56,
       "trailing_trigger": 1552.6,
-      "highest_price_seen": 1492.88,
+      "highest_price_seen": 1494.0999755859375,
       "is_trailing_active": false,
       "tgpi_score": 2.742,
       "top3_prob": 48.6,
@@ -114,5 +87,5 @@
       "rsi": "54.0"
     }
   ],
-  "last_updated": "2026-09-24 09:30:55"
+  "last_updated": "2026-09-24 09:37:03"
 }
