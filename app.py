@@ -180,11 +180,22 @@ if os.path.exists(orders_file):
                     except Exception:
                         pass
 
+            # Cross-reference with closed paper trades history to prevent double counting
+            closed_dict = {}
+            history_file = os.path.join(PROJECT_ROOT, "paper_trades_history.csv")
+            if os.path.exists(history_file):
+                try:
+                    hist_df = pd.read_csv(history_file)
+                    for _, h_row in hist_df.iterrows():
+                        closed_dict[str(h_row['Symbol']).strip().upper()] = h_row
+                except Exception:
+                    pass
+
             live_rows = []
             total_unrealized_pnl = 0.0
 
             for _, row in orders_df.iterrows():
-                sym = str(row['Symbol']).strip()
+                sym = str(row['Symbol']).strip().upper()
                 entry_px = float(row.get('Entry Limit (₹)', row.get('Entry (Limit)', row.get('Entry', 0.0))))
                 initial_sl = float(row.get('Stop Loss (₹)', row.get('Initial SL (-2.5%)', entry_px * 0.975)))
                 shares = int(row.get('Shares', 0))
@@ -193,21 +204,50 @@ if os.path.exists(orders_file):
                 prob_top3 = float(row.get('Top-3 Prob %', 0.0))
 
                 ltp = live_prices.get(sym, entry_px)
-                unrealized_pnl = (ltp - entry_px) * shares
-                unrealized_pct = ((ltp - entry_px) / entry_px) * 100.0 if entry_px > 0 else 0.0
-                total_unrealized_pnl += unrealized_pnl
 
-                # Trailing runner logic
-                trailing_trigger = round(entry_px * 1.04, 2) # +4.0%
-                if ltp >= trailing_trigger:
-                    current_sl = round(ltp * 0.965, 2) # High - 3.5%
-                    status = f"🏃 RUNNER ACTIVE (+{unrealized_pct:.1f}% | Trailed SL ₹{current_sl:,.2f})"
+                # Check if position has already been closed by Order Manager / Daemon
+                if sym in closed_dict:
+                    h_row = closed_dict[sym]
+                    exit_px = float(h_row.get('Exit (Rs.)', initial_sl * 0.998))
+                    net_pnl = float(h_row.get('Net PnL (Rs.)', (exit_px - entry_px) * shares))
+                    ret_pct = float(h_row.get('Return %', ((exit_px - entry_px) / entry_px) * 100.0))
+                    exit_reason = str(h_row.get('Exit Reason', 'INITIAL SL HIT (-2.5%)'))
+
+                    # Position is closed: realized loss is capped, unrealized risk is 0
+                    status = f"🛑 {exit_reason} (Capped at {ret_pct:+.2f}%)"
+                    display_px = exit_px
+                    display_pnl = net_pnl
+                    display_pct = ret_pct
+                    # Do NOT add to total_unrealized_pnl because it is already accounted for in Realized P&L!
                 elif ltp <= initial_sl:
-                    current_sl = initial_sl
-                    status = "🔴 Stop Loss Hit (-2.5%)"
+                    # In exchange trading, Stop Loss triggers at initial_sl with execution slippage (0.2%)
+                    # The loss is strictly capped at -2.5% and does NOT bleed further with subsequent market drops
+                    exit_px = round(initial_sl * 0.998, 2)
+                    capped_pnl = (exit_px - entry_px) * shares
+                    capped_pct = ((exit_px - entry_px) / entry_px) * 100.0
+
+                    status = f"🔴 Stop Loss Hit (-2.50% Capped)"
+                    display_px = exit_px
+                    display_pnl = capped_pnl
+                    display_pct = capped_pct
+                    total_unrealized_pnl += capped_pnl
                 else:
-                    current_sl = initial_sl
-                    status = "🟢 In Trade (Active Initial Buffer)"
+                    # Active running position
+                    unrealized_pnl = (ltp - entry_px) * shares
+                    unrealized_pct = ((ltp - entry_px) / entry_px) * 100.0 if entry_px > 0 else 0.0
+                    total_unrealized_pnl += unrealized_pnl
+
+                    trailing_trigger = round(entry_px * 1.04, 2) # +4.0%
+                    if ltp >= trailing_trigger:
+                        current_sl = round(ltp * 0.965, 2) # High - 3.5%
+                        status = f"🏃 RUNNER ACTIVE (+{unrealized_pct:.1f}% | Trailed SL ₹{current_sl:,.2f})"
+                    else:
+                        current_sl = initial_sl
+                        status = "🟢 In Trade (Active Initial Buffer)"
+
+                    display_px = ltp
+                    display_pnl = unrealized_pnl
+                    display_pct = unrealized_pct
 
                 live_rows.append({
                     'Rank': row.get('Rank', '#1'),
@@ -217,10 +257,10 @@ if os.path.exists(orders_file):
                     'Allocated (₹)': capital,
                     'Shares': shares,
                     'Entry Limit (₹)': entry_px,
-                    'Live Price (₹)': ltp,
-                    'Current SL (₹)': current_sl,
-                    'Unrealized P&L (₹)': unrealized_pnl,
-                    'Return (%)': unrealized_pct,
+                    'Live Price (₹)': display_px,
+                    'Current SL (₹)': initial_sl,
+                    'Unrealized P&L (₹)': display_pnl,
+                    'Return (%)': display_pct,
                     'Status': status,
                     'Trade Logic': row.get('Trade Logic', ''),
                     'Key Drivers': row.get('Key Drivers', ''),

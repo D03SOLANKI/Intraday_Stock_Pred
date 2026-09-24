@@ -169,7 +169,9 @@ class OrderManager:
 
                 # Check Stop Loss / Trailing Stop breach
                 if current_price <= pos['current_sl']:
-                    exit_px = current_price * (1.0 - self.strategy.exit_slippage_pct)
+                    # Stop loss fills at the stop trigger level with standard execution slippage (0.2%),
+                    # strictly capping loss at -2.5% (or trailing stop level), avoiding polling lag slippage.
+                    exit_px = round(pos['current_sl'] * (1.0 - self.strategy.exit_slippage_pct), 2)
                     exit_reason = "TRAILING STOP HIT" if pos['is_trailing_active'] else "INITIAL SL HIT (-2.5%)"
                     self._close_position(pos, exit_px, exit_reason, current_time_str)
                     return pos
