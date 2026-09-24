@@ -145,23 +145,40 @@ if os.path.exists(orders_file):
         if len(orders_df) > 0:
             symbols = [f"{s}.NS" for s in orders_df['Symbol'].tolist()]
             
-            # Fetch latest prices via yfinance
+            # Fetch instantaneous real-time prices via yfinance fast_info
             live_prices = {}
             if YFINANCE_AVAILABLE:
-                try:
-                    yf_data = yf.download(symbols, period="1d", interval="5m", progress=False)
-                    if not yf_data.empty and 'Close' in yf_data:
-                        if isinstance(yf_data['Close'], pd.DataFrame):
-                            last_closes = yf_data['Close'].iloc[-1]
-                            for s in orders_df['Symbol']:
-                                sym_ns = f"{s}.NS"
-                                if sym_ns in last_closes and not pd.isna(last_closes[sym_ns]):
-                                    live_prices[s] = float(last_closes[sym_ns])
-                        elif isinstance(yf_data['Close'], pd.Series):
-                            s = orders_df['Symbol'].iloc[0]
-                            live_prices[s] = float(yf_data['Close'].iloc[-1])
-                except Exception:
-                    pass
+                for s in orders_df['Symbol']:
+                    sym_ns = f"{s}.NS"
+                    try:
+                        tk = yf.Ticker(sym_ns)
+                        lp = tk.fast_info['lastPrice']
+                        if lp and not pd.isna(lp) and float(lp) > 0:
+                            live_prices[s] = float(lp)
+                    except Exception:
+                        pass
+                
+                # Fallback to download if fast_info missing for any symbol
+                missing = [s for s in orders_df['Symbol'] if s not in live_prices]
+                if missing:
+                    try:
+                        missing_ns = [f"{s}.NS" for s in missing]
+                        yf_data = yf.download(missing_ns, period="1d", interval="1m", progress=False)
+                        if not yf_data.empty and 'Close' in yf_data:
+                            if isinstance(yf_data['Close'], pd.DataFrame):
+                                for s in missing:
+                                    t = f"{s}.NS"
+                                    if t in yf_data['Close']:
+                                        c_s = yf_data['Close'][t].dropna()
+                                        if not c_s.empty:
+                                            live_prices[s] = float(c_s.iloc[-1])
+                            elif isinstance(yf_data['Close'], pd.Series):
+                                s = missing[0]
+                                c_s = yf_data['Close'].dropna()
+                                if not c_s.empty:
+                                    live_prices[s] = float(c_s.iloc[-1])
+                    except Exception:
+                        pass
 
             live_rows = []
             total_unrealized_pnl = 0.0

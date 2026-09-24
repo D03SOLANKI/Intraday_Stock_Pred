@@ -165,17 +165,36 @@ def run_daemon():
                 # Poll real-time market prices for active open positions
                 try:
                     import yfinance as yf
-                    symbols_ns = [f"{p['symbol']}.NS" for p in open_positions]
-                    yf_data = yf.download(symbols_ns, period="1d", interval="1m", progress=False)
                     live_px = {}
-                    if not yf_data.empty and 'Close' in yf_data:
-                        if isinstance(yf_data['Close'], pd.DataFrame):
-                            for p in open_positions:
-                                t = f"{p['symbol']}.NS"
-                                if t in yf_data['Close'] and not pd.isna(yf_data['Close'][t].iloc[-1]):
-                                    live_px[p['symbol']] = float(yf_data['Close'][t].iloc[-1])
-                        elif isinstance(yf_data['Close'], pd.Series):
-                            live_px[open_positions[0]['symbol']] = float(yf_data['Close'].iloc[-1])
+                    for p in open_positions:
+                        sym = p['symbol']
+                        t = f"{sym}.NS"
+                        try:
+                            tk = yf.Ticker(t)
+                            lp = tk.fast_info['lastPrice']
+                            if lp and not pd.isna(lp) and float(lp) > 0:
+                                live_px[sym] = float(lp)
+                        except Exception:
+                            pass
+                    
+                    # Fallback to batch download if fast_info missing
+                    missing_syms = [p['symbol'] for p in open_positions if p['symbol'] not in live_px]
+                    if missing_syms:
+                        symbols_ns = [f"{s}.NS" for s in missing_syms]
+                        yf_data = yf.download(symbols_ns, period="1d", interval="1m", progress=False)
+                        if not yf_data.empty and 'Close' in yf_data:
+                            if isinstance(yf_data['Close'], pd.DataFrame):
+                                for s in missing_syms:
+                                    t = f"{s}.NS"
+                                    if t in yf_data['Close']:
+                                        c_series = yf_data['Close'][t].dropna()
+                                        if not c_series.empty:
+                                            live_px[s] = float(c_series.iloc[-1])
+                            elif isinstance(yf_data['Close'], pd.Series):
+                                s = missing_syms[0]
+                                c_series = yf_data['Close'].dropna()
+                                if not c_series.empty:
+                                    live_px[s] = float(c_series.iloc[-1])
                             
                     if live_px:
                         closed_positions = order_mgr.process_portfolio_ticks(live_px)
