@@ -70,7 +70,7 @@
       "initial_sl": 173.29,
       "current_sl": 173.29,
       "trailing_trigger": 184.84,
-      "highest_price_seen": 177.73,
+      "highest_price_seen": 178.8800048828125,
       "is_trailing_active": false,
       "tgpi_score": 2.649,
       "top3_prob": 59.4,
@@ -87,5 +87,5 @@
       "rsi": "20.6"
     }
   ],
-  "last_updated": "2026-09-25 09:37:05"
+  "last_updated": "2026-09-25 09:50:01"
 }

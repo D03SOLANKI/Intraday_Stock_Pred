@@ -168,9 +168,9 @@ def run_scanner(
         print(f"\nML Model ranked {len(day_panel)} pure midcaps. Top candidates generated:")
 
         orders = []
-        print("\n" + "─" * 85)
-        print("ACTIONABLE 09:30 AM BUY ORDERS — PREDICTED TOP MID-CAP GAINERS")
-        print("─" * 85)
+        print("\n" + "-" * 85)
+        print("ACTIONABLE 09:30 AM BUY ORDERS -- PREDICTED TOP MID-CAP GAINERS")
+        print("-" * 85)
 
         # Fetch actual live real-time market tick (LTP) at the exact moment of execution
         candidate_symbols = top3_cands['symbol'].tolist()
@@ -256,7 +256,7 @@ def run_scanner(
 
         orders_df = pd.DataFrame(orders)
         orders_df.to_csv("daily_live_scan_orders.csv", index=False)
-        print(f"\nOrders saved → daily_live_scan_orders.csv ({len(orders_df)} orders)")
+        print(f"\nOrders saved -> daily_live_scan_orders.csv ({len(orders_df)} orders)")
 
         # Synchronize Paper Trading Portfolio Ledger
         try:

@@ -171,6 +171,17 @@ class MLTop3GainerStrategy:
         if valid_df.empty:
             return pd.DataFrame()
 
+        # Institutional Health Gate: Exclude Falling Knives & Panic Distribution Traps
+        # High volume on a massive down-day (closing near lows, dist_20d < -5%) is seller liquidation,
+        # NOT institutional accumulation. Candidates must close in upper range (>= 40%) and near/above 20-DMA.
+        if 'range_position' in valid_df.columns:
+            valid_df = valid_df[valid_df['range_position'] >= 0.40]
+        if 'dist_sma20_feat' in valid_df.columns:
+            valid_df = valid_df[valid_df['dist_sma20_feat'] >= -5.0]
+
+        if valid_df.empty:
+            return pd.DataFrame()
+
         X = valid_df[self.feature_cols]
 
         # Raw model inferences
