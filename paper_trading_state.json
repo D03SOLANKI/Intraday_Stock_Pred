@@ -922,7 +922,34 @@
       "sector_alpha": "+2.29%",
       "dist_20dma": "-1.4%",
       "rsi": "40.3"
+    },
+    {
+      "rank": "#2",
+      "symbol": "JSWENERGY",
+      "entry_date": "2026-10-14",
+      "entry_time": "20:11:52",
+      "entry_price": 491.28,
+      "shares": 5699,
+      "allocated_capital": 2799808.07,
+      "initial_sl": 479.0,
+      "current_sl": 479.0,
+      "trailing_trigger": 510.93,
+      "highest_price_seen": 491.28,
+      "is_trailing_active": false,
+      "tgpi_score": 2.179,
+      "top3_prob": 68.1,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "JSWENERGY ranked #2 in the pure Mid-Cap universe with a TGPI score of 2.179 and an estimated 68.1% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (3.58x 20-DMA volume) and dominant buyer control into close (99% of session range). With a 20-DMA distance of -3.6% and sector alpha of +3.78%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 3.58x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 99% of daily range (Dominant Buyer Control into Close) \u2022 **Sector Relative Strength:** +3.78% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** -3.6% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.32 (Active Volatility Expansion) \u2022 **RSI Momentum:** 35.8 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "3.58x",
+      "range_position": "99%",
+      "sector_alpha": "+3.78%",
+      "dist_20dma": "-3.6%",
+      "rsi": "35.8"
     }
   ],
-  "last_updated": "2026-10-14 14:51:31"
+  "last_updated": "2026-10-14 20:11:52"
 }
