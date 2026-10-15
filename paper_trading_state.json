@@ -949,7 +949,34 @@
       "sector_alpha": "+3.78%",
       "dist_20dma": "-3.6%",
       "rsi": "35.8"
+    },
+    {
+      "rank": "#2",
+      "symbol": "HINDPETRO",
+      "entry_date": "2026-10-15",
+      "entry_time": "19:56:46",
+      "entry_price": 349.2,
+      "shares": 8018,
+      "allocated_capital": 2799861.55,
+      "initial_sl": 340.47,
+      "current_sl": 340.47,
+      "trailing_trigger": 363.17,
+      "highest_price_seen": 349.2,
+      "is_trailing_active": false,
+      "tgpi_score": 2.152,
+      "top3_prob": 58.6,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "HINDPETRO ranked #2 in the pure Mid-Cap universe with a TGPI score of 2.152 and an estimated 58.6% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (2.20x 20-DMA volume) and dominant buyer control into close (99% of session range). With a 20-DMA distance of +0.4% and sector alpha of +4.10%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 2.20x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 99% of daily range (Dominant Buyer Control into Close) \u2022 **Sector Relative Strength:** +4.10% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** +0.4% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.20 (Normal Volatility Expansion) \u2022 **RSI Momentum:** 50.8 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "2.20x",
+      "range_position": "99%",
+      "sector_alpha": "+4.10%",
+      "dist_20dma": "+0.4%",
+      "rsi": "50.8"
     }
   ],
-  "last_updated": "2026-10-15 14:26:43"
+  "last_updated": "2026-10-15 19:56:46"
 }
