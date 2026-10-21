@@ -1057,7 +1057,34 @@
       "sector_alpha": "+3.86%",
       "dist_20dma": "+2.1%",
       "rsi": "52.5"
+    },
+    {
+      "rank": "#3",
+      "symbol": "IPCALAB",
+      "entry_date": "2026-10-21",
+      "entry_time": "20:12:13",
+      "entry_price": 1922.74,
+      "shares": 1456,
+      "allocated_capital": 2799506.27,
+      "initial_sl": 1874.67,
+      "current_sl": 1874.67,
+      "trailing_trigger": 1999.65,
+      "highest_price_seen": 1922.74,
+      "is_trailing_active": false,
+      "tgpi_score": 1.236,
+      "top3_prob": 50.8,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "IPCALAB ranked #3 in the pure Mid-Cap universe with a TGPI score of 1.236 and an estimated 50.8% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (2.14x 20-DMA volume) and balanced session (80% of session range). With a 20-DMA distance of -1.0% and sector alpha of +6.05%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 2.14x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 80% of daily range (Balanced Session) \u2022 **Sector Relative Strength:** +6.05% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** -1.0% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.47 (Active Volatility Expansion) \u2022 **RSI Momentum:** 45.2 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "2.14x",
+      "range_position": "80%",
+      "sector_alpha": "+6.05%",
+      "dist_20dma": "-1.0%",
+      "rsi": "45.2"
     }
   ],
-  "last_updated": "2026-10-21 14:41:00"
+  "last_updated": "2026-10-21 20:12:13"
 }
