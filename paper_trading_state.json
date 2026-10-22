@@ -1084,7 +1084,34 @@
       "sector_alpha": "+6.05%",
       "dist_20dma": "-1.0%",
       "rsi": "45.2"
+    },
+    {
+      "rank": "#1",
+      "symbol": "ACC",
+      "entry_date": "2026-10-22",
+      "entry_time": "14:43:35",
+      "entry_price": 1196.99,
+      "shares": 2339,
+      "allocated_capital": 2799757.68,
+      "initial_sl": 1167.06,
+      "current_sl": 1167.06,
+      "trailing_trigger": 1244.87,
+      "highest_price_seen": 1196.99,
+      "is_trailing_active": false,
+      "tgpi_score": 2.162,
+      "top3_prob": 40.2,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "ACC ranked #1 in the pure Mid-Cap universe with a TGPI score of 2.162 and an estimated 40.2% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by moderate accumulation (1.26x 20-DMA volume) and dominant buyer control into close (97% of session range). With a 20-DMA distance of -2.2% and sector alpha of +2.55%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 1.26x 20-DMA volume (Moderate Accumulation) \u2022 **Range Placement:** Closed at 97% of daily range (Dominant Buyer Control into Close) \u2022 **Sector Relative Strength:** +2.55% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** -2.2% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.79 (Active Volatility Expansion) \u2022 **RSI Momentum:** 39.3 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "1.26x",
+      "range_position": "97%",
+      "sector_alpha": "+2.55%",
+      "dist_20dma": "-2.2%",
+      "rsi": "39.3"
     }
   ],
-  "last_updated": "2026-10-21 20:12:13"
+  "last_updated": "2026-10-22 14:43:35"
 }
