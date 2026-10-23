@@ -1111,7 +1111,34 @@
       "sector_alpha": "+2.55%",
       "dist_20dma": "-2.2%",
       "rsi": "39.3"
+    },
+    {
+      "rank": "#3",
+      "symbol": "BALKRISIND",
+      "entry_date": "2026-10-23",
+      "entry_time": "14:40:14",
+      "entry_price": 2102.7,
+      "shares": 1331,
+      "allocated_capital": 2798689.71,
+      "initial_sl": 2050.13,
+      "current_sl": 2050.13,
+      "trailing_trigger": 2186.81,
+      "highest_price_seen": 2102.7,
+      "is_trailing_active": false,
+      "tgpi_score": 0.882,
+      "top3_prob": 27.7,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "BALKRISIND ranked #3 in the pure Mid-Cap universe with a TGPI score of 0.882 and an estimated 27.7% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (2.33x 20-DMA volume) and balanced session (59% of session range). With a 20-DMA distance of -3.5% and sector alpha of +1.77%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 2.33x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 59% of daily range (Balanced Session) \u2022 **Sector Relative Strength:** +1.77% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** -3.5% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.19 (Normal Volatility Expansion) \u2022 **RSI Momentum:** 39.0 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "2.33x",
+      "range_position": "59%",
+      "sector_alpha": "+1.77%",
+      "dist_20dma": "-3.5%",
+      "rsi": "39.0"
     }
   ],
-  "last_updated": "2026-10-22 20:12:26"
+  "last_updated": "2026-10-23 14:40:14"
 }
