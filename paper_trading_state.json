@@ -1408,7 +1408,34 @@
       "sector_alpha": "+3.61%",
       "dist_20dma": "-1.7%",
       "rsi": "39.6"
+    },
+    {
+      "rank": "#1",
+      "symbol": "PIIND",
+      "entry_date": "2026-11-02",
+      "entry_time": "17:34:34",
+      "entry_price": 2170.53,
+      "shares": 1290,
+      "allocated_capital": 2799986.73,
+      "initial_sl": 2116.27,
+      "current_sl": 2116.27,
+      "trailing_trigger": 2257.35,
+      "highest_price_seen": 2170.53,
+      "is_trailing_active": false,
+      "tgpi_score": 1.869,
+      "top3_prob": 50.6,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "PIIND ranked #1 in the pure Mid-Cap universe with a TGPI score of 1.869 and an estimated 50.6% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (2.29x 20-DMA volume) and balanced session (71% of session range). With a 20-DMA distance of -4.1% and sector alpha of +0.97%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 2.29x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 71% of daily range (Balanced Session) \u2022 **Sector Relative Strength:** +0.97% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** -4.1% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.27 (Active Volatility Expansion) \u2022 **RSI Momentum:** 36.2 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "2.29x",
+      "range_position": "71%",
+      "sector_alpha": "+0.97%",
+      "dist_20dma": "-4.1%",
+      "rsi": "36.2"
     }
   ],
-  "last_updated": "2026-10-30 21:46:39"
+  "last_updated": "2026-11-02 17:34:34"
 }
