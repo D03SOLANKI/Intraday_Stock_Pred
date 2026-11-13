@@ -1759,7 +1759,34 @@
       "sector_alpha": "+3.68%",
       "dist_20dma": "-3.3%",
       "rsi": "42.7"
+    },
+    {
+      "rank": "#1",
+      "symbol": "POWERINDIA",
+      "entry_date": "2026-11-13",
+      "entry_time": "17:26:20",
+      "entry_price": 31658.19,
+      "shares": 88,
+      "allocated_capital": 2785920.72,
+      "initial_sl": 30866.74,
+      "current_sl": 30866.74,
+      "trailing_trigger": 32924.52,
+      "highest_price_seen": 31658.19,
+      "is_trailing_active": false,
+      "tgpi_score": 1.758,
+      "top3_prob": 61.7,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "POWERINDIA ranked #1 in the pure Mid-Cap universe with a TGPI score of 1.758 and an estimated 61.7% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (5.37x 20-DMA volume) and balanced session (72% of session range). With a 20-DMA distance of +3.3% and sector alpha of +10.54%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 5.37x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 72% of daily range (Balanced Session) \u2022 **Sector Relative Strength:** +10.54% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** +3.3% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.41 (Active Volatility Expansion) \u2022 **RSI Momentum:** 50.1 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "5.37x",
+      "range_position": "72%",
+      "sector_alpha": "+10.54%",
+      "dist_20dma": "+3.3%",
+      "rsi": "50.1"
     }
   ],
-  "last_updated": "2026-11-12 23:15:27"
+  "last_updated": "2026-11-13 17:26:20"
 }
