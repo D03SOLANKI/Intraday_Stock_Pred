@@ -1867,7 +1867,34 @@
       "sector_alpha": "+5.76%",
       "dist_20dma": "+11.7%",
       "rsi": "78.7"
+    },
+    {
+      "rank": "#2",
+      "symbol": "MCX",
+      "entry_date": "2026-11-26",
+      "entry_time": "19:07:19",
+      "entry_price": 3842.67,
+      "shares": 728,
+      "allocated_capital": 2797463.76,
+      "initial_sl": 3746.6,
+      "current_sl": 3746.6,
+      "trailing_trigger": 3996.38,
+      "highest_price_seen": 3842.67,
+      "is_trailing_active": false,
+      "tgpi_score": 1.509,
+      "top3_prob": 59.4,
+      "status": "OPEN",
+      "exit_price": null,
+      "exit_time": null,
+      "exit_reason": null,
+      "trade_logic": "MCX ranked #2 in the pure Mid-Cap universe with a TGPI score of 1.509 and an estimated 59.4% probability of ranking among the Top-3 gainers tomorrow. The selection is driven by strong institutional thrust (2.30x 20-DMA volume) and dominant buyer control into close (89% of session range). With a 20-DMA distance of +12.7% and sector alpha of +7.29%, the stock exhibits strong institutional continuation momentum.",
+      "key_drivers": "**Volume Surge:** 2.30x 20-DMA volume (Strong Institutional Thrust) \u2022 **Range Placement:** Closed at 89% of daily range (Dominant Buyer Control into Close) \u2022 **Sector Relative Strength:** +7.29% outperformance vs its industry peer group \u2022 **Moving Average Proximity:** +12.7% above 20-DMA denoting sustained bullish trend structure \u2022 **Volatility State:** ATR compression ratio of 1.29 (Active Volatility Expansion) \u2022 **RSI Momentum:** 69.4 (in healthy acceleration zone, not overbought) \u2022 **09:30 AM Entry Gate:** Requires opening gap >= +0.35% and 15m low >= previous close to confirm buyer defense \u2022 **Dynamic Trailing Plan:** Initial SL at -2.5%; once gain reaches +4.0%, trailing stop activates at Peak - 3.5% to capture 5%\u201320%+ runner gains",
+      "volume_surge": "2.30x",
+      "range_position": "89%",
+      "sector_alpha": "+7.29%",
+      "dist_20dma": "+12.7%",
+      "rsi": "69.4"
     }
   ],
-  "last_updated": "2026-11-26 01:06:54"
+  "last_updated": "2026-11-26 19:07:19"
 }
